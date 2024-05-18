@@ -6,12 +6,14 @@ import java.util.Random;
 import entorno.Entorno;
 
 public class Bloques {
+	private Entorno entorno;
 	Random random;
 	int x;
 	int y;
 	int ancho;
 	int alto;
 	boolean seRompe;
+	public Bloques() {}
 	public Bloques(int x, int y, int ancho, int alto , boolean seRompe) {
 		super();
 		this.x = x;
@@ -35,23 +37,33 @@ public class Bloques {
 	public boolean isSeRompe() {
 		return seRompe;
 	}
-	public void crearPiso(Bloques bloque,Bloques [] conjuntoBloques , int y) {
+  
+    
+	public void crearPiso(Bloques [] conjuntoBloques , int y , int ancho, int alto) {
 		int suma = 25;
-		this.random = new Random();
 		for (int i = 0; i < conjuntoBloques.length; i++) {
-			conjuntoBloques[i] = new Bloques(suma , y , 50, 30 , random.nextBoolean());
-			suma += 50;
-			System.out.println(conjuntoBloques[i].seRompe);
+			if(i % 2 == 0 && i % 4 == 0 ) {
+				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , true);
+				suma += 50;
+			}
+			else {
+				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , false);
+				suma += 50;
+			}
 		}
 	}
-	public void dibujar(Entorno entorno) {
-		entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.RED);
+	public void dibujar(Entorno entorno , Bloques [] conjuntoBloques) {
+		Color color;
+		for (int i = 0; i < conjuntoBloques.length; i++) {
+			Bloques bloque = conjuntoBloques[i];
+			if(bloque.seRompe) {
+				color = Color.red;
+			}
+			else {
+				color = Color.BLUE;
+			}
+				entorno.dibujarRectangulo(bloque.x, bloque.y, bloque.ancho, bloque.alto, 0, color);
+		}
 	}
-	
-	
-
-
-
-	
 	
 }

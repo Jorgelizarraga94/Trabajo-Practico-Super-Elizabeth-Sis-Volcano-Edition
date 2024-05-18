@@ -1,45 +1,44 @@
 package juego;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import entorno.Entorno;
 import entorno.InterfaceJuego;
 
 public class Juego extends InterfaceJuego {
 	// El objeto Entorno que controla el tiempo y otros
 	private Entorno entorno;
-	private Bloques bloque;
-	private Bloques bloque2;
-	private Bloques bloque3;
-	private Bloques [] conjuntoBloques;
-	private Bloques [] piso2;
+	private Bloques bloque; //Creación de Objeto Bloque
+	private Bloques [] piso1; //Creación de conjunto de bloques que forman los pisos
+	private Bloques [] piso2;	
 	private Bloques [] piso3;
+	private Bloques [] piso4;
+	private Princesa princesa; //Creación del objeto princesa
 	
 	
+	boolean enElSuelo = true;  // Variable para verificar si el personaje está en el suelo
+	double velocidadY = 0;     // Velocidad vertical del personaje
+	double gravedad = 0.5; 		// Gravedad del personaje
 	// Variables y métodos propios de cada grupo
 	// ...
 
 	Juego() {
-		Random rand = new Random();
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, " Super Elizabeth Sis, Volcano Edition - Grupo ... - v1", 800, 600);
-		this.bloque = new Bloques(400,500,50,50,false);
-		this.bloque2 = new Bloques(400,300,50,50,false);
-		this.bloque3 = new Bloques(400,100,50,50,false);
+		this.entorno = new Entorno(this, " Super Elizabeth Sis, Volcano Edition - Grupo ... - v1", 1000, 700);
+		this.bloque = new Bloques(); //Inicialización de Bloque
+		this.princesa = new Princesa(); // Inicialización de princesa
 		
-		conjuntoBloques = new Bloques[16];
-		piso2 = new Bloques[16];
-		piso3 = new Bloques[16];
-		bloque.crearPiso(bloque, conjuntoBloques , 500);
-		bloque.crearPiso(bloque2, piso2, 300);
-		bloque.crearPiso(bloque3, piso3 , 100);
 		// Inicializar lo que haga falta para el juego
-		// ...
+		piso1 = new Bloques[20]; //Reserva de 20 espacios para bloques
+		piso2 = new Bloques[20];
+		piso3 = new Bloques[20];
+		piso4 = new Bloques[20];
+		 
+				
+		bloque.crearPiso(piso1 , 600 , 50,15); //llamada al contructor de bloque y creación de pisos
+		bloque.crearPiso(piso2, 450,40,40);
+		bloque.crearPiso(piso3 , 300,40,40);
+		bloque.crearPiso(piso4 , 150,40,40);
+		
+		
 		// Inicia el juego!
 		this.entorno.iniciar();
 	}
@@ -53,18 +52,54 @@ public class Juego extends InterfaceJuego {
 	public void tick() {
 		// Procesamiento de un instante de tiempo
 		// ...
+		//Recorremos un piso y dibujamos los primeros 4 con el metodo dibujar
+		for (int i = 0; i < piso1.length; i++) {
+			this.piso1[i].dibujar(this.entorno, piso1);
+			this.piso2[i].dibujar(this.entorno , piso2);
+			this.piso3[i].dibujar(this.entorno , piso3);
+			this.piso4[i].dibujar(this.entorno , piso4);
+		}
+		//dibujamos la princesa y le damos movilidad
+		this.princesa.dibujar(this.entorno);
+		//movimiento izquierda
+		movIzq();
+		//moviento derecha
+		movDer();
+		//saltar
+		saltar();
 		
-		for (int i = 0; i < conjuntoBloques.length; i++) {
-			this.conjuntoBloques[i].dibujar(this.entorno);
-		}
-		for (int i = 0; i < piso2.length; i++) {
-			this.piso2[i].dibujar(this.entorno);
-		}
-		for (int i = 0; i < piso3.length; i++) {
-			this.piso3[i].dibujar(this.entorno);
+	}
+	public void movIzq() {
+		if(this.entorno.estaPresionada(this.entorno.TECLA_IZQUIERDA)) {
+			this.princesa.x -= 2;
 		}
 	}
+	public void movDer() {
+		if(this.entorno.estaPresionada(this.entorno.TECLA_DERECHA)) {
+			this.princesa.x += 2;
+		}
+	}
+	public void saltar() {
+	    // Detectar si se presionó la tecla de salto
+	    if(this.entorno.sePresiono(this.entorno.TECLA_ARRIBA)) {
+	        if(enElSuelo) {
+	            velocidadY = -10; // Ajusta este valor para cambiar la fuerza del salto
+	            enElSuelo = false;
+	        }
+	    }
 
+	    // Aplicar gravedad
+	    velocidadY += gravedad;
+	    this.princesa.y += velocidadY;
+
+	    // Verificamos si el personaje está tocando el suelo
+	    if(this.princesa.y >= 550) { // Suponiendo que 550 es la posición del suelo
+	        this.princesa.y = 550;
+	        velocidadY = 0;
+	        enElSuelo = true;
+	    }
+
+	}
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		Juego juego = new Juego();
