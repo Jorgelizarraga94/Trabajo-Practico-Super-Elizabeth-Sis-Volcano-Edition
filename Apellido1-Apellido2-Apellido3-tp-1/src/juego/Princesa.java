@@ -64,10 +64,29 @@ public class Princesa {
         }
 
         if (this.y >= 557) { // Suponiendo que 550 es la posición del suelo
-            this.y = 557;
+        	this.setY(557);
             this.velocidadY = 0;
             this.enElSuelo = true;
         }
+        if (this.y == 400) { // Suponiendo que 550 es la posición del suelo
+            this.setY(400);
+            this.velocidadY = 0;
+            this.enElSuelo = true;
+        }
+        if (this.y == 240) { // Suponiendo que 550 es la posición del suelo
+            this.setY(240);
+            this.velocidadY = 0;
+            this.enElSuelo = true;
+        }
+        if (this.y == 95) { // Suponiendo que 550 es la posición del suelo
+            this.setY(95);
+            this.velocidadY = 0;
+            this.enElSuelo = true;
+        }
+        
+       System.out.println(this.y);
+        
+       
     }
 	public int getX() {
 		return x;

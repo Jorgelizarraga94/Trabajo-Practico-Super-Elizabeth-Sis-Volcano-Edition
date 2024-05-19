@@ -13,7 +13,6 @@ public class Bloques {
 	int ancho;
 	int alto;
 	boolean seRompe;
-	boolean seRompio;
 	private double angulo;
 	private double escala;
 	private Entorno entorno;
@@ -24,7 +23,7 @@ public class Bloques {
 	
 	
 	public Bloques() {}
-	public Bloques(int x, int y, int ancho, int alto , boolean seRompe , boolean seRompio) {
+	public Bloques(int x, int y, int ancho, int alto , boolean seRompe  ) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -33,7 +32,7 @@ public class Bloques {
 		this.angulo = 0;
 		this.escala = 3;
 		this.seRompe = seRompe;
-		this.seRompio = false;
+		
 	}
 	public int getX() {
 		return x;
@@ -55,11 +54,11 @@ public class Bloques {
 		Random aleatorio = new Random();
 		for (int i = 0; i < conjuntoBloques.length; i++) {
 			if((aleatorio.nextInt(3)) % 6 == 0 || i == 3 ) {
-				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , true , false);
+				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , true);
 				suma += 50;
 			}
 			else {
-				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , false , false);
+				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , false);
 				suma += 50;
 			}
 		}
@@ -69,7 +68,6 @@ public class Bloques {
 		for (int i = 0; i < conjuntoBloques.length; i++) {
 			Bloques bloque = conjuntoBloques[i];
 			if (bloque == null) {
-	            System.out.println("no dibujar");
 	            continue; // Pasar al siguiente bloque si este es null
 	        }
 			if(bloque.seRompe) {

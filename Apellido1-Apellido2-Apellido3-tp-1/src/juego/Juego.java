@@ -96,6 +96,7 @@ public class Juego extends InterfaceJuego {
 		if(this.entorno.estaPresionada(TECLA_X)) {
 			 princesa.saltar(); 
 			 romperBloque();
+			 System.out.println(princesa.getY());
 		 }
 		princesa.actualizarSalto();
 	}
