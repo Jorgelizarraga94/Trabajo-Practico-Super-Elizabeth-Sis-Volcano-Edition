@@ -1,9 +1,8 @@
 package juego;
 
 import java.awt.Image;
-
+import java.util.ArrayList;
 import javax.sound.sampled.Clip;
-
 import entorno.Entorno;
 import entorno.Herramientas;
 import entorno.InterfaceJuego;
@@ -36,7 +35,7 @@ public class Juego extends InterfaceJuego {
 		//cargar imagen de fondo
 		this.fondo = Herramientas.cargarImagen("lava.png");
 		this.bloque = new Bloques(); //Inicialización de Bloque
-		this.princesa = new Princesa(entorno.ancho()/2 , 600 , 50, 70); // Inicialización de princesa
+		this.princesa = new Princesa(entorno.ancho()/2 , 557 , 50, 70); // Inicialización de princesa
 		
 		// Inicializar lo que haga falta para el juego
 		piso1 = new Bloques[20]; //Reserva de 20 espacios para bloques
@@ -44,16 +43,13 @@ public class Juego extends InterfaceJuego {
 		piso3 = new Bloques[20];
 		piso4 = new Bloques[20];
 		 
-				
-		bloque.crearPiso(piso1 , 600 , 50,15); //llamada al contructor de bloque y creación de pisos
-		bloque.crearPiso(piso2, 450,40,40);
-		bloque.crearPiso(piso3 , 300,40,40);
-		bloque.crearPiso(piso4 , 150,40,40);
-		
+		bloque.crearPiso(piso1 , 600,50,15); //llamada al contructor de bloque y creación de pisos
+		bloque.crearPiso(piso2, 450,50,40);
+		bloque.crearPiso(piso3 , 300,50,40);
+		bloque.crearPiso(piso4 , 150,50,40);
 		
 		// Inicia el juego!
 		this.entorno.iniciar();
-		
 	}
 
 	/**
@@ -63,17 +59,29 @@ public class Juego extends InterfaceJuego {
 	 * del TP para mayor detalle).
 	 */
 	public void tick() {
-		// Procesamiento de un instante de tiempo
-		// ...
 		entorno.dibujarImagen(fondo, entorno.ancho()/2,entorno.alto()/2,0);
-		//Recorremos un piso y dibujamos los primeros 4 con el metodo dibujar
-		for (int i = 0; i < piso1.length; i++) {
-			this.piso1[i].dibujar(this.entorno, piso1);
-			this.piso2[i].dibujar(this.entorno , piso2);
-			this.piso3[i].dibujar(this.entorno , piso3);
-			this.piso4[i].dibujar(this.entorno , piso4);
-		}
-
+	    
+	    // Dibujar los bloques de cada piso
+	    for (int i = 0; i < piso1.length; i++) {
+	        if (piso1[i] != null) {
+	            piso1[i].dibujar(entorno, piso1);
+	        }
+	    }
+	    for (int i = 0; i < piso2.length; i++) {
+	        if (piso2[i] != null) {
+	            piso2[i].dibujar(entorno, piso2);
+	        }
+	    }
+	    for (int i = 0; i < piso3.length; i++) {
+	        if (piso3[i] != null) {
+	            piso3[i].dibujar(entorno, piso3);
+	        }
+	    }
+	    for (int i = 0; i < piso4.length; i++) {
+	        if (piso4[i] != null) {
+	            piso4[i].dibujar(entorno, piso4);
+	        }
+	    }
 		//dibujamos la princesa y le damos movilidad
 		this.princesa.dibujar(this.entorno);
 		//movimiento izquierda
@@ -86,13 +94,36 @@ public class Juego extends InterfaceJuego {
 		}
 		if(this.entorno.estaPresionada(TECLA_X)) {
 			 princesa.saltar(); 
+			 romperBloque();
 		 }
 		princesa.actualizar();
-		
 	}
 
+	public void romperBloque() {
+	    // Obtener la posición de la princesa
+	    int posXPrincesa = princesa.getX();
+	    int posYPrincesa = princesa.getY();
 
+	    // Iterar sobre los bloques del piso2
+	    for (int i = 0; i < piso2.length; i++) {
+	        // Verificar si el bloque actual no es nulo y si es rompible
+	        if (piso2[i] != null && piso2[i].seRompe) {
+	            // Calcular los límites del bloque actual
+	            int bloqueX = piso2[i].getX();
+	            int bloqueY = piso2[i].getY();
+	            int bloqueAncho = piso2[i].getAncho();
+	            int bloqueAlto = piso2[i].getAlto();
 
+	            // Verificar si la princesa está dentro de los límites del bloque actual
+	            if (posXPrincesa + princesa.getAncho() >= bloqueX && posXPrincesa <= bloqueX + bloqueAncho
+	                    && posYPrincesa + princesa.getAlto() >= bloqueY && posYPrincesa <= bloqueY + bloqueAlto) {
+	                // Eliminar el bloque actual y salir del bucle
+	                piso2[i] = null;
+	                break;
+	            }
+	        }
+	    }
+	}
 	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {

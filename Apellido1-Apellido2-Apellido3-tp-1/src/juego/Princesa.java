@@ -1,7 +1,5 @@
 package juego;
 
-
-
 import java.awt.Color;
 import java.awt.Image;
 
@@ -17,10 +15,11 @@ public class Princesa {
 	private double angulo;
 	private double escala;
 	private Entorno entorno;
+	private Bloques bloque;
 	//Variables de salto
 	boolean enElSuelo = true;  // Variable para verificar si el personaje está en el suelo
 	double velocidadY = 0;     // Velocidad vertical del personaje
-	double gravedad = 0.9; 		// Gravedad del personaje
+	double gravedad = 0.6; 		// Gravedad del personaje
 	
 	
 	public Princesa(int x, int y, int ancho, int alto) {
@@ -45,26 +44,26 @@ public class Princesa {
 		this.x += 2;
 	}
 	 public void saltar() {
-	        // Detectar si se presionó la tecla de salto
-	        if (this.enElSuelo) {
-	            velocidadY = -10; // Ajusta este valor para cambiar la fuerza del salto
-	            this.enElSuelo = false;
-	        }
-	    }
+        // Detectar si se presionó la tecla de salto
+        if(this.enElSuelo) {
+            velocidadY = -10; // Ajusta este valor para cambiar la fuerza del salto
+            this.enElSuelo = false;
+        }
+    }
     public void actualizar() {
         // Aplicar gravedad en cada frame
+    	
         if (!enElSuelo) {
             velocidadY += gravedad;
             this.y += velocidadY;
         }
-        // Verificar si el personaje está tocando el suelo
-        if (this.y >= 550) { // Suponiendo que 550 es la posición del suelo
-            this.y = 550;
+
+        if (this.y >= 557) { // Suponiendo que 550 es la posición del suelo
+            this.y = 557;
             this.velocidadY = 0;
             this.enElSuelo = true;
         }
     }
-
 	public int getX() {
 		return x;
 	}

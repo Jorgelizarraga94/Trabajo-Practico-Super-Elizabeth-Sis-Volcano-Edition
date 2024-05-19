@@ -8,21 +8,23 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Bloques {
-	private Entorno entorno;
-	Random random;
 	int x;
 	int y;
 	int ancho;
 	int alto;
 	boolean seRompe;
+	boolean seRompio;
+	private double angulo;
+	private double escala;
+	private Entorno entorno;
+	private Random random;
 	private Image bloqueSeRompe = Herramientas.cargarImagen("bloqueSeRompe.png");
 	private Image bloqueNoSeRompe = Herramientas.cargarImagen("bloqueNoSeRompe.png");
 	private Image imagen;
-	private double angulo;
-	private double escala;
+	
 	
 	public Bloques() {}
-	public Bloques(int x, int y, int ancho, int alto , boolean seRompe) {
+	public Bloques(int x, int y, int ancho, int alto , boolean seRompe , boolean seRompio) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -31,6 +33,7 @@ public class Bloques {
 		this.angulo = 0;
 		this.escala = 3;
 		this.seRompe = seRompe;
+		this.seRompio = false;
 	}
 	public int getX() {
 		return x;
@@ -47,18 +50,16 @@ public class Bloques {
 	public boolean isSeRompe() {
 		return seRompe;
 	}
-  
-    
 	public void crearPiso(Bloques [] conjuntoBloques , int y , int ancho, int alto) {
 		int suma = 25;
 		Random aleatorio = new Random();
 		for (int i = 0; i < conjuntoBloques.length; i++) {
 			if((aleatorio.nextInt(10)) % 2 == 0 || i == 3 ) {
-				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , true);
+				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , true , false);
 				suma += 50;
 			}
 			else {
-				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , false);
+				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , false , false);
 				suma += 50;
 			}
 		}
@@ -67,18 +68,25 @@ public class Bloques {
 		Color color;
 		for (int i = 0; i < conjuntoBloques.length; i++) {
 			Bloques bloque = conjuntoBloques[i];
+			if (bloque == null) {
+	            System.out.println("no dibujar");
+	            continue; // Pasar al siguiente bloque si este es null
+	        }
 			if(bloque.seRompe) {
-				//color = Color.red;
-				entorno.dibujarImagen(bloqueSeRompe, bloque.x, bloque.y, this.angulo, this.escala);
-				imagen = bloqueSeRompe;
+				color = Color.red;
+				entorno.dibujarRectangulo(bloque.x, bloque.y, bloque.ancho, bloque.alto, 0, color);
+				//entorno.dibujarImagen(bloqueSeRompe, bloque.x, bloque.y, this.angulo, this.escala);
+				//imagen = bloqueSeRompe;
 			}
 			else {
 				//color = Color.BLUE;
+				//entorno.dibujarRectangulo(bloque.x, bloque.y, bloque.ancho, bloque.alto, 0, color);
 				entorno.dibujarImagen(bloqueNoSeRompe, bloque.x, bloque.y, this.angulo, this.escala);
 				imagen = bloqueNoSeRompe;
 			}
-				//entorno.dibujarRectangulo(bloque.x, bloque.y, bloque.ancho, bloque.alto, 0, color);
-				entorno.dibujarImagen(imagen, bloque.x, bloque.y, this.angulo, this.escala);
+			
+				//
+				//entorno.dibujarImagen(imagen, bloque.x, bloque.y, this.angulo, this.escala);
 		}
 	}
 	
