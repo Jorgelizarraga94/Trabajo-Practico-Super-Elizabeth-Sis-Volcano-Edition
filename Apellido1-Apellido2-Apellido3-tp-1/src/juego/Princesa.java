@@ -7,11 +7,12 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Princesa {
-	public int x;
-	public int y;
+	private int x;
+	private int y;
 	private int ancho;
 	private int alto;
-	private Image imagen;
+	private Image imagenDer;
+	private Image imagenIzq;
 	private double angulo;
 	private double escala;
 	private Entorno entorno;
@@ -19,7 +20,7 @@ public class Princesa {
 	//Variables de salto
 	boolean enElSuelo = true;  // Variable para verificar si el personaje está en el suelo
 	double velocidadY = 0;     // Velocidad vertical del personaje
-	double gravedad = 0.6; 		// Gravedad del personaje
+	double gravedad = 0.3; 		// Gravedad del personaje
 	
 	
 	public Princesa(int x, int y, int ancho, int alto) {
@@ -28,20 +29,25 @@ public class Princesa {
 		this.y = y;
 		this.ancho = ancho;
 		this.alto = alto;
-		this.imagen = Herramientas.cargarImagen("princesa.png");
+		this.imagenDer = Herramientas.cargarImagen("princesaDer.png");
+		this.imagenIzq = Herramientas.cargarImagen("princesaIzq.png");
 		this.angulo = 0;
-		this.escala = 0.06;
+		this.escala = 0.04;
 	}
-	public void dibujar(Entorno entorno) {
+	public void dibujarDer(Entorno entorno) {
 		//entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.blue);
-		entorno.dibujarImagen(imagen, x, y, angulo, escala);
+		entorno.dibujarImagen(imagenDer, x, y, angulo, escala);
+	}
+	public void dibujarIzq(Entorno entorno) {
+		//entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.blue);
+		entorno.dibujarImagen(imagenIzq, x, y, angulo, escala);
 	}
 	public void movIzq() {
-		this.x -= 2;
+		this.x -= 3;
 		
 	}
 	public void movDer() {
-		this.x += 2;
+		this.x += 3;
 	}
 	 public void saltar() {
         // Detectar si se presionó la tecla de salto
@@ -50,9 +56,8 @@ public class Princesa {
             this.enElSuelo = false;
         }
     }
-    public void actualizar() {
+    public void actualizarSalto() {
         // Aplicar gravedad en cada frame
-    	
         if (!enElSuelo) {
             velocidadY += gravedad;
             this.y += velocidadY;
@@ -94,14 +99,6 @@ public class Princesa {
 
 	public void setAlto(int alto) {
 		this.alto = alto;
-	}
-
-	public Image getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(Image imagen) {
-		this.imagen = imagen;
 	}
 
 	public double getAngulo() {

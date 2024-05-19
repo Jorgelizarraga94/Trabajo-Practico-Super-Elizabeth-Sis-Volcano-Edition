@@ -47,14 +47,14 @@ public class Bloques {
 	public int getAlto() {
 		return alto;
 	}
-	public boolean isSeRompe() {
+	public boolean SeRompe() {
 		return seRompe;
 	}
 	public void crearPiso(Bloques [] conjuntoBloques , int y , int ancho, int alto) {
 		int suma = 25;
 		Random aleatorio = new Random();
 		for (int i = 0; i < conjuntoBloques.length; i++) {
-			if((aleatorio.nextInt(10)) % 2 == 0 || i == 3 ) {
+			if((aleatorio.nextInt(3)) % 6 == 0 || i == 3 ) {
 				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , true , false);
 				suma += 50;
 			}

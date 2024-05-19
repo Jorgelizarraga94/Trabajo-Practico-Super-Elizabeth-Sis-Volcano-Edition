@@ -24,7 +24,7 @@ public class Juego extends InterfaceJuego {
 
 	boolean enElSuelo = true;  // Variable para verificar si el personaje está en el suelo
 	double velocidadY = 0;     // Velocidad vertical del personaje
-	double gravedad = 0.5; 		// Gravedad del personaje
+	double gravedad = 0.9; 		// Gravedad del personaje
 	//String cancion = "./users/jorge/Desktop/Apellido1-Apellido2-Apellido3-tp-1/camping.mp3";
 	// Variables y métodos propios de cada grupo
 	// ...
@@ -83,40 +83,47 @@ public class Juego extends InterfaceJuego {
 	        }
 	    }
 		//dibujamos la princesa y le damos movilidad
-		this.princesa.dibujar(this.entorno);
+		this.princesa.dibujarDer(this.entorno);
 		//movimiento izquierda
-		if(this.entorno.estaPresionada(this.entorno.TECLA_IZQUIERDA)) {
-			princesa.movIzq();
+		if(this.entorno.estaPresionada(this.entorno.TECLA_IZQUIERDA)&& princesa.getX() > 31) {
+			princesa.movIzq();			
+			this.princesa.dibujarIzq(this.entorno);
 		}
 		//moviento derecha
-		if(this.entorno.estaPresionada(this.entorno.TECLA_DERECHA)) {
+		if(this.entorno.estaPresionada(this.entorno.TECLA_DERECHA) && princesa.getX() < 970) {
 			princesa.movDer();
 		}
 		if(this.entorno.estaPresionada(TECLA_X)) {
 			 princesa.saltar(); 
 			 romperBloque();
 		 }
-		princesa.actualizar();
+		princesa.actualizarSalto();
 	}
 
 	public void romperBloque() {
-	    // Obtener la posición de la princesa
-	    int posXPrincesa = princesa.getX();
-	    int posYPrincesa = princesa.getY();
+	    // Obtener la posición y tamaño de la princesa
+	    int princesaX = princesa.getX();
+	    int princesaY = princesa.getY();
+	    int princesaAncho = princesa.getAncho();
+	    int princesaAlto = princesa.getAlto();
 
 	    // Iterar sobre los bloques del piso2
 	    for (int i = 0; i < piso2.length; i++) {
-	        // Verificar si el bloque actual no es nulo y si es rompible
-	        if (piso2[i] != null && piso2[i].seRompe) {
+	        Bloques bloqueActual = piso2[i];
+	        
+	        // Verificar si el bloque actual no es nulo y es rompible
+	        if (bloqueActual != null && bloqueActual.seRompe) {
 	            // Calcular los límites del bloque actual
-	            int bloqueX = piso2[i].getX();
-	            int bloqueY = piso2[i].getY();
-	            int bloqueAncho = piso2[i].getAncho();
-	            int bloqueAlto = piso2[i].getAlto();
+	            int bloqueX = bloqueActual.getX();
+	            int bloqueY = bloqueActual.getY();
+	            int bloqueAncho = bloqueActual.getAncho();
+	            int bloqueAlto = bloqueActual.getAlto();
 
 	            // Verificar si la princesa está dentro de los límites del bloque actual
-	            if (posXPrincesa + princesa.getAncho() >= bloqueX && posXPrincesa <= bloqueX + bloqueAncho
-	                    && posYPrincesa + princesa.getAlto() >= bloqueY && posYPrincesa <= bloqueY + bloqueAlto) {
+	            boolean colisionX = princesaX + princesaAncho >= bloqueX && princesaX <= bloqueX + bloqueAncho;
+	            boolean colisionY = princesaY + princesaAlto >= bloqueY && princesaY <= bloqueY + bloqueAlto;
+
+	            if (colisionX && colisionY) {
 	                // Eliminar el bloque actual y salir del bucle
 	                piso2[i] = null;
 	                break;
