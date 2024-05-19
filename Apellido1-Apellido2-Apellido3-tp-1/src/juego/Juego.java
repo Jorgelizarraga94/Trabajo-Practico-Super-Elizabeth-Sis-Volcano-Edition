@@ -1,30 +1,42 @@
 package juego;
 
+import java.awt.Image;
+
+import javax.sound.sampled.Clip;
+
 import entorno.Entorno;
+import entorno.Herramientas;
 import entorno.InterfaceJuego;
 
 public class Juego extends InterfaceJuego {
 	// El objeto Entorno que controla el tiempo y otros
 	private Entorno entorno;
+	//private Clip sonido;
 	private Bloques bloque; //Creación de Objeto Bloque
 	private Bloques [] piso1; //Creación de conjunto de bloques que forman los pisos
 	private Bloques [] piso2;	
 	private Bloques [] piso3;
 	private Bloques [] piso4;
 	private Princesa princesa; //Creación del objeto princesa
-	
-	
+
+	private char TECLA_X = 120;
+	//Creación de objetos tipo Imagen
+	private Image fondo;
+
 	boolean enElSuelo = true;  // Variable para verificar si el personaje está en el suelo
 	double velocidadY = 0;     // Velocidad vertical del personaje
 	double gravedad = 0.5; 		// Gravedad del personaje
+	//String cancion = "./users/jorge/Desktop/Apellido1-Apellido2-Apellido3-tp-1/camping.mp3";
 	// Variables y métodos propios de cada grupo
 	// ...
 
 	Juego() {
 		// Inicializa el objeto entorno
 		this.entorno = new Entorno(this, " Super Elizabeth Sis, Volcano Edition - Grupo ... - v1", 1000, 700);
+		//cargar imagen de fondo
+		this.fondo = Herramientas.cargarImagen("lava.png");
 		this.bloque = new Bloques(); //Inicialización de Bloque
-		this.princesa = new Princesa(); // Inicialización de princesa
+		this.princesa = new Princesa(entorno.ancho()/2 , 600 , 50, 70); // Inicialización de princesa
 		
 		// Inicializar lo que haga falta para el juego
 		piso1 = new Bloques[20]; //Reserva de 20 espacios para bloques
@@ -41,6 +53,7 @@ public class Juego extends InterfaceJuego {
 		
 		// Inicia el juego!
 		this.entorno.iniciar();
+		
 	}
 
 	/**
@@ -52,6 +65,7 @@ public class Juego extends InterfaceJuego {
 	public void tick() {
 		// Procesamiento de un instante de tiempo
 		// ...
+		entorno.dibujarImagen(fondo, entorno.ancho()/2,entorno.alto()/2,0);
 		//Recorremos un piso y dibujamos los primeros 4 con el metodo dibujar
 		for (int i = 0; i < piso1.length; i++) {
 			this.piso1[i].dibujar(this.entorno, piso1);
@@ -59,47 +73,27 @@ public class Juego extends InterfaceJuego {
 			this.piso3[i].dibujar(this.entorno , piso3);
 			this.piso4[i].dibujar(this.entorno , piso4);
 		}
+
 		//dibujamos la princesa y le damos movilidad
 		this.princesa.dibujar(this.entorno);
 		//movimiento izquierda
-		movIzq();
+		if(this.entorno.estaPresionada(this.entorno.TECLA_IZQUIERDA)) {
+			princesa.movIzq();
+		}
 		//moviento derecha
-		movDer();
-		//saltar
-		saltar();
+		if(this.entorno.estaPresionada(this.entorno.TECLA_DERECHA)) {
+			princesa.movDer();
+		}
+		if(this.entorno.estaPresionada(TECLA_X)) {
+			 princesa.saltar(); 
+		 }
+		princesa.actualizar();
 		
 	}
-	public void movIzq() {
-		if(this.entorno.estaPresionada(this.entorno.TECLA_IZQUIERDA)) {
-			this.princesa.x -= 2;
-		}
-	}
-	public void movDer() {
-		if(this.entorno.estaPresionada(this.entorno.TECLA_DERECHA)) {
-			this.princesa.x += 2;
-		}
-	}
-	public void saltar() {
-	    // Detectar si se presionó la tecla de salto
-	    if(this.entorno.sePresiono(this.entorno.TECLA_ARRIBA)) {
-	        if(enElSuelo) {
-	            velocidadY = -10; // Ajusta este valor para cambiar la fuerza del salto
-	            enElSuelo = false;
-	        }
-	    }
 
-	    // Aplicar gravedad
-	    velocidadY += gravedad;
-	    this.princesa.y += velocidadY;
 
-	    // Verificamos si el personaje está tocando el suelo
-	    if(this.princesa.y >= 550) { // Suponiendo que 550 es la posición del suelo
-	        this.princesa.y = 550;
-	        velocidadY = 0;
-	        enElSuelo = true;
-	    }
 
-	}
+	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		Juego juego = new Juego();
