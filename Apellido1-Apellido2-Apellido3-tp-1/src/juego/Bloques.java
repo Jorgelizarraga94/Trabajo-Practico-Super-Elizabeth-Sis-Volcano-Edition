@@ -51,8 +51,9 @@ public class Bloques {
     
 	public void crearPiso(Bloques [] conjuntoBloques , int y , int ancho, int alto) {
 		int suma = 25;
+		Random aleatorio = new Random();
 		for (int i = 0; i < conjuntoBloques.length; i++) {
-			if(i % 2 == 0 && i % 4 == 0 ) {
+			if((aleatorio.nextInt(10)) % 2 == 0 || i == 3 ) {
 				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , true);
 				suma += 50;
 			}
