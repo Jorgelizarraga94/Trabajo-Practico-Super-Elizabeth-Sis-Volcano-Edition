@@ -8,11 +8,11 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Bloques {
-	int x;
-	int y;
-	int ancho;
-	int alto;
-	boolean seRompe;
+	private int x;
+	private int y;
+	private int ancho;
+	private int alto;
+	private boolean seRompe;
 	private double angulo;
 	private double escala;
 	private Entorno entorno;
@@ -21,9 +21,10 @@ public class Bloques {
 	private Image bloqueNoSeRompe = Herramientas.cargarImagen("bloqueNoSeRompe.png");
 	private Image imagen;
 	
-	
+	//----------Constructores----------//
 	public Bloques() {}
-	public Bloques(int x, int y, int ancho, int alto , boolean seRompe  ) {
+	
+	public Bloques(int x, int y, int ancho, int alto , boolean seRompe ){
 		super();
 		this.x = x;
 		this.y = y;
@@ -32,23 +33,31 @@ public class Bloques {
 		this.angulo = 0;
 		this.escala = 3;
 		this.seRompe = seRompe;
-		
 	}
+	
+	//----------Getters y Setter----------//
 	public int getX() {
 		return x;
 	}
+	
 	public int getY() {
 		return y;
 	}
+	
 	public int getAncho() {
 		return ancho;
 	}
+	
 	public int getAlto() {
 		return alto;
 	}
+	
 	public boolean GetseRompe() {
 		return seRompe;
 	}
+	//----------Metodos----------//
+	
+	//-----------Recibe un array de bloques y sus atributos y crea el piso---------------//
 	public void crearPiso(Bloques [] conjuntoBloques , int y , int ancho, int alto) {
 		int suma = 25;
 		Random aleatorio = new Random();
@@ -63,12 +72,13 @@ public class Bloques {
 			}
 		}
 	}
+	//-----------Recibe un array de bloques y los dibuja---------------//
 	public void dibujar(Entorno entorno , Bloques [] conjuntoBloques) {
 		Color color;
 		for (int i = 0; i < conjuntoBloques.length; i++) {
 			Bloques bloque = conjuntoBloques[i];
 			if (bloque == null) {
-	            continue; // Pasar al siguiente bloque si este es null
+	            continue; 
 	        }
 			if(bloque.seRompe) {
 				color = Color.red;
@@ -82,10 +92,6 @@ public class Bloques {
 				entorno.dibujarImagen(bloqueNoSeRompe, bloque.x, bloque.y, this.angulo, this.escala);
 				imagen = bloqueNoSeRompe;
 			}
-			
-				//
-				//entorno.dibujarImagen(imagen, bloque.x, bloque.y, this.angulo, this.escala);
 		}
 	}
-	
 }
