@@ -46,7 +46,7 @@ public class Bloques {
 	public int getAlto() {
 		return alto;
 	}
-	public boolean SeRompe() {
+	public boolean GetseRompe() {
 		return seRompe;
 	}
 	public void crearPiso(Bloques [] conjuntoBloques , int y , int ancho, int alto) {
@@ -72,9 +72,9 @@ public class Bloques {
 	        }
 			if(bloque.seRompe) {
 				color = Color.red;
-				entorno.dibujarRectangulo(bloque.x, bloque.y, bloque.ancho, bloque.alto, 0, color);
-				//entorno.dibujarImagen(bloqueSeRompe, bloque.x, bloque.y, this.angulo, this.escala);
-				//imagen = bloqueSeRompe;
+				//entorno.dibujarRectangulo(bloque.x, bloque.y, bloque.ancho, bloque.alto, 0, color);
+				entorno.dibujarImagen(bloqueSeRompe, bloque.x, bloque.y, this.angulo, this.escala);
+				imagen = bloqueSeRompe;
 			}
 			else {
 				//color = Color.BLUE;

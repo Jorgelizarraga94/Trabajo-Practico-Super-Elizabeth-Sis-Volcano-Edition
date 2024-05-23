@@ -6,12 +6,11 @@ import java.awt.Image;
 import entorno.Entorno;
 import entorno.Herramientas;
 
-public class Princesa {
+public class Princesa2 {
 	private int x;
 	private int y;
 	private int ancho;
 	private int alto;
-	private int piso = 557;
 	private Image imagenDer;
 	private Image imagenIzq;
 	private double angulo;
@@ -24,7 +23,7 @@ public class Princesa {
 	double gravedad = 0.3; 		// Gravedad del personaje
 	
 	
-	public Princesa(int x, int y, int ancho, int alto) {
+	public Princesa2(int x, int y, int ancho, int alto) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -49,49 +48,7 @@ public class Princesa {
 	public void movDer() {
 		this.x += 3;
 	}
-	 public void saltar() {
-        // Detectar si se presionó la tecla de salto
-        if(this.enElSuelo) {
-            velocidadY = -10; // Ajusta este valor para cambiar la fuerza del salto
-            this.enElSuelo = false;
-        }
-    }
-    public void actualizarSalto() {
-        // Aplicar gravedad en cada frame
-        if (!enElSuelo) {
-            velocidadY += gravedad;
-            this.y += velocidadY;
-        }
 
-        if (this.y >= this.piso) { // Suponiendo que 550 es la posición del suelo
-        	this.setY(this.piso);
-            this.velocidadY = 0;
-            this.enElSuelo = true;
-        }
-        /*if (this.y == 400) { // Suponiendo que 550 es la posición del suelo
-            this.setY(400);
-            this.velocidadY = 0;
-            this.enElSuelo = true;
-        }
-        if (this.y == 240) { // Suponiendo que 550 es la posición del suelo
-            this.setY(240);
-            this.velocidadY = 0;
-            this.enElSuelo = true;
-        }
-        if (this.y == 95) { // Suponiendo que 550 es la posición del suelo
-            this.setY(95);
-            this.velocidadY = 0;
-            this.enElSuelo = true;
-        }*/
-
-    }
-    
-	public double getVelocidadY() {
-		return velocidadY;
-	}
-	public void setVelocidadY(double velocidadY) {
-		this.velocidadY = velocidadY;
-	}
 	public int getX() {
 		return x;
 	}
@@ -145,13 +102,6 @@ public class Princesa {
 	public void setGravedad(double gravedad) {
 		this.gravedad = gravedad;
 	}
-	public int getPiso() {
-		return piso;
-	}
-	public void setPiso(int piso) {
-		this.piso = piso;
-	}
-	
 	
 	
 	
