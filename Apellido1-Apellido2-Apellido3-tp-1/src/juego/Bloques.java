@@ -2,6 +2,7 @@ package juego;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.Random;
 
 import entorno.Entorno;
@@ -58,25 +59,28 @@ public class Bloques {
 	//----------Metodos----------//
 	
 	//-----------Recibe un array de bloques y sus atributos y crea el piso---------------//
-	public void crearPiso(Bloques [] conjuntoBloques , int y , int ancho, int alto) {
+	public void crearPiso(ArrayList<Bloques> todosLosPisos, Bloques [] conjuntoBloques , int y , int ancho, int alto) {
 		int suma = 25;
 		Random aleatorio = new Random();
 		for (int i = 0; i < conjuntoBloques.length; i++) {
 			if((aleatorio.nextInt(3)) % 6 == 0 || i == 3 ) {
 				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , true);
+				todosLosPisos.add(conjuntoBloques[i]);
 				suma += 50;
 			}
 			else {
 				conjuntoBloques[i] = new Bloques(suma , y , ancho, alto , false);
+				todosLosPisos.add(conjuntoBloques[i]);
 				suma += 50;
 			}
 		}
 	}
+
 	//-----------Recibe un array de bloques y los dibuja---------------//
-	public void dibujar(Entorno entorno , Bloques [] conjuntoBloques) {
+	public void dibujar(Entorno entorno , ArrayList<Bloques> todosLosPisos) {
 		Color color;
-		for (int i = 0; i < conjuntoBloques.length; i++) {
-			Bloques bloque = conjuntoBloques[i];
+		for (int i = 0; i < todosLosPisos.size(); i++) {
+			Bloques bloque = todosLosPisos.get(i);
 			if (bloque == null) {
 	            continue; 
 	        }
