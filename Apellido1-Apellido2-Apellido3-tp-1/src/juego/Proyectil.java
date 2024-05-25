@@ -9,6 +9,7 @@ public class Proyectil {
 	private int y;
 	private int ANCHO = 10;
 	private int ALTO = 10;
+	private boolean disparoActivo = false;
 	private Entorno entorno;
 	//----------------Constructores-----------------//
 	public Proyectil() {}
@@ -51,17 +52,21 @@ public class Proyectil {
 	public void setALTO(int ALTO) {
 		this.ALTO = ALTO;
 	}
+	public boolean getDisparoActivo() {
+		return disparoActivo;
+	}
+	public void setDisparoActivo(boolean disparoActivo) {
+		this.disparoActivo = disparoActivo;
+	}
 	//----------------Metodos-----------------//
 	public void disparoDer(Entorno entorno) {
 		entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.blue);
 		int bala =  this.x += 20;
 		this.x = bala;
 	}
-	
 	public void disparoIzq(Entorno entorno) {
 		entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.red);
 		int bala =  this.x -= 20;
 		this.x = bala;
 	}
-	
 }

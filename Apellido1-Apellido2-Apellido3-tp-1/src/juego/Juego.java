@@ -2,7 +2,6 @@ package juego;
 
 import java.awt.Image;
 import java.util.ArrayList;
-import javax.sound.sampled.Clip;
 import entorno.Entorno;
 import entorno.Herramientas;
 import entorno.InterfaceJuego;
@@ -15,12 +14,14 @@ public class Juego extends InterfaceJuego {
 	private Bloques [] piso3;
 	private Bloques [] piso4;
 	private ArrayList <Bloques> todosLosPisos;
+	private ArrayList <Tiranosaurio> listaTiranosaurio;
 	private Princesa princesa; 
 	private Tiranosaurio [] tiranosaurios;
 	private Tiranosaurio tiranosaurio;
 	private Proyectil proyectil;
+	private Proyectil proyectilTiranosaurio;
 	private boolean disparoLado;
-	private boolean disparoActivo;
+	
 	//-----------Variables de teclas--------------//
 	private char TECLA_X = 120;
 	private char TECLA_C = 99;
@@ -36,29 +37,36 @@ public class Juego extends InterfaceJuego {
 		this.bloque = new Bloques(); 
 		this.princesa = new Princesa(entorno.ancho()/2 , 557 , 1, 70); 
 		this.proyectil = new Proyectil(princesa.getX() , princesa.getY() , 20, 20);
-		//this.tiranosaurio = new Tiranosaurio(); 
+		this.tiranosaurio = new Tiranosaurio(); 
+		
 		//--------Reserva de 20 espacios para bloques--------//
 		piso1 = new Bloques[20]; 
 		piso2 = new Bloques[20];
 		piso3 = new Bloques[20];
 		piso4 = new Bloques[20];
+		
 		//--------Reserva de 8 espacios para tiranosaurios--------//
-		//tiranosaurios = new Tiranosaurio[8]; 
+		tiranosaurios = new Tiranosaurio[8]; 
 		//--------llamada al contructor de bloque y creación de pisos--------//
-		todosLosPisos = new ArrayList();
+		todosLosPisos = new ArrayList<Bloques>();
 		bloque.crearPiso(todosLosPisos,piso1 , 600,50,15); 
 		bloque.crearPiso(todosLosPisos,piso2, 450,50,50);
 		bloque.crearPiso(todosLosPisos,piso3 , 300,50,50);
 		bloque.crearPiso(todosLosPisos,piso4 , 150,50,50);
-		/*tiranosaurios[0] = new Tiranosaurio(100 , 540 , 20 , 20);
-		tiranosaurios[1] = new Tiranosaurio(950 , 540 , 20 , 20);
-		tiranosaurios[2] = new Tiranosaurio(100 , 400 , 20 , 20);
-		tiranosaurios[3] = new Tiranosaurio(950 , 400 , 20 , 20);
-		tiranosaurios[4] = new Tiranosaurio(100 , 240 , 20 , 20);
-		tiranosaurios[5] = new Tiranosaurio(950 , 240 , 20 , 20);
-		tiranosaurios[6] = new Tiranosaurio(100 , 95 , 20 , 20);
-		tiranosaurios[7] = new Tiranosaurio(950 , 95 , 20 , 20);*/
-
+		listaTiranosaurio = new ArrayList<Tiranosaurio>();
+		
+		tiranosaurios[0] = new Tiranosaurio(50 , 540 , 20 , 20);
+		tiranosaurios[1] = new Tiranosaurio(900 , 540 , 20 , 20);
+		tiranosaurios[2] = new Tiranosaurio(50 , 400 , 20 , 20);
+		tiranosaurios[3] = new Tiranosaurio(900 , 400 , 20 , 20);
+		tiranosaurios[4] = new Tiranosaurio(50 , 240 , 20 , 20);
+		tiranosaurios[5] = new Tiranosaurio(900 , 240 , 20 , 20);
+		tiranosaurios[6] = new Tiranosaurio(50 , 95 , 20 , 20);
+		tiranosaurios[7] = new Tiranosaurio(900 , 95 , 20 , 20);
+		tiranosaurio.crearTiranosaurio(listaTiranosaurio, tiranosaurios);
+		//-----------------Proyectil tiranosaurio-----------------//
+		this.proyectilTiranosaurio = new Proyectil(listaTiranosaurio.get(1).getX(),listaTiranosaurio.get(1).getY(),20,20);
+		
 		// Inicia el juego!
 		this.entorno.iniciar();
 	}
@@ -68,8 +76,7 @@ public class Juego extends InterfaceJuego {
 	 * estado interno del juego para simular el paso del tiempo (ver el enunciado
 	 * del TP para mayor detalle).
 	 */
-	public void tick() {
-		
+	public void tick(){
 		//--------FONDO--------//
 		entorno.dibujarImagen(fondo, entorno.ancho()/2,entorno.alto()/2,0);
 	    //--------DIBUJA LOS BLOQUES DE CADA PISO--------//
@@ -77,7 +84,7 @@ public class Juego extends InterfaceJuego {
 		//--------DIBUJA A LA PRINCESA Y LE DA MOVILIDAD--------//
 		this.princesa.dibujarDer(this.entorno);
 		//--------DIBUJA EL TIRANOSAURIO--------//
-		//this.tiranosaurio.dibujar(entorno, tiranosaurios);
+		this.tiranosaurio.dibujar(entorno, listaTiranosaurio);
 		//--------MOVIMIENTO IZQUIERDA--------//
 		if(this.entorno.estaPresionada(this.entorno.TECLA_IZQUIERDA)&& princesa.getX() > 31) {
 			this.princesa.dibujarIzq(this.entorno);
@@ -91,45 +98,60 @@ public class Juego extends InterfaceJuego {
 		}
 		//--------DISPARO IZQUIERDA--------//
 		if(this.entorno.sePresiono(this.TECLA_C) && proyectil != null && disparoLado == true && proyectil.getX() >0 ) {
-				disparoActivo = true;
-				this.proyectil = new Proyectil(princesa.getX() , princesa.getY() , 20, 20);
+				proyectil.setDisparoActivo(true);			
 		}
 		//--------DISPARO DERECHA--------//
 		if(this.entorno.sePresiono(this.TECLA_C) && proyectil != null && disparoLado == false && proyectil.getX() < 1000 ) {
-			disparoActivo = true;
-			this.proyectil = new Proyectil(princesa.getX() , princesa.getY() , 20, 20);
+			proyectil.setDisparoActivo(true);
 		}
-		//--------CONTROL DE DIRECCIÓN DEL DISPARO----------//
-		if(proyectil!= null && disparoActivo == true && disparoLado == true) {
-			proyectil.disparoIzq(entorno);
-		}
-		if(proyectil!= null && disparoActivo == true && disparoLado == false) {
-			proyectil.disparoDer(entorno);
-		}
-		//--------LUEGO DE DISPARAR, PONEMOS AL PROYECTIL EL NULL Y VOLVEMOS A CREARLO--------//
-		if(proyectil != null && this.proyectil.getX() >= 1000 ||proyectil != null && this.proyectil.getX() <= 0) {
-			this.proyectil = null;
-			disparoActivo = false;
-			this.proyectil = new Proyectil(princesa.getX() , princesa.getY() , 20, 20);
-		}
-		
+		disparar(this.proyectil, this.disparoLado);
+		dispararTiranosaurio(proyectilTiranosaurio);
 		//--------SI PRESIONA LA TECLA X SALTA, ROMPE LOS BLOQUES Y CAMBIA LA GRAVEDAD PARA SIMULAR COLISION--------//
 		if(this.entorno.estaPresionada(this.TECLA_X)) {
 			 princesa.saltar(); 
-			 romperBloque();
-			 for (int i = 0; i < todosLosPisos.size(); i++) {
-				 Bloques bloque = todosLosPisos.get(i);
-				 if(bloque != null){
-					if(colisionCabezaBloque(bloque)) {
-						princesa.setVelocidadY(0);
-					}
-					if(colisionPiesBloque(bloque)) {
-						princesa.setPiso(princesa.getY());
-					}
-				 }
-			 }	 
+			 romperBloque(); 
 		 }
+		for(int i = 0; i < todosLosPisos.size(); i++) {
+			 Bloques bloque = todosLosPisos.get(i);
+				if(colisionCabezaBloque(bloque)) {
+					princesa.setVelocidadY(+10);
+				}
+				if(colisionPiesBloque(bloque)) {
+					princesa.setPiso(princesa.getY());
+				}
+		}
 		princesa.actualizarSalto();
+	}
+	public void disparar(Proyectil proyectil , boolean disparoLado) {
+//--------CONTROL DE DIRECCIÓN DEL DISPARO----------//
+		if(proyectil!= null && proyectil.getDisparoActivo() == true && disparoLado == true) {
+			proyectil.disparoIzq(entorno);
+		}
+		if(proyectil!= null && proyectil.getDisparoActivo() == true && disparoLado == false) {
+			proyectil.disparoDer(entorno);
+		}
+		//--------LUEGO DE DISPARAR, PONEMOS AL PROYECTIL EN NULL Y VOLVEMOS A CREARLO--------//
+		if(proyectil != null && this.proyectil.getX() >= 1000 ||proyectil != null && this.proyectil.getX() <= 0) {
+			this.proyectil = null;
+			this.proyectil = new Proyectil(princesa.getX() , princesa.getY() , 20, 20);
+		}	
+	}
+	
+	public void dispararTiranosaurio(Proyectil proyectil) {
+	//--------CONTROL DE DIRECCIÓN DEL DISPARO----------//
+		if(proyectil!= null ) {
+			proyectil.disparoIzq(entorno);
+		}
+		/*if(proyectil!= null) {
+			proyectil.disparoDer(entorno);
+		}*/
+		//--------LUEGO DE DISPARAR, PONEMOS AL PROYECTIL EN NULL Y VOLVEMOS A CREARLO--------//
+		if(proyectil != null && this.proyectil.getX() >= 1000 ||proyectil != null && this.proyectil.getX() <= 0) {
+			System.out.println("hola");
+			this.proyectil = null;
+			this.proyectil.setX(listaTiranosaurio.get(0).getX());
+			this.proyectil.setY(listaTiranosaurio.get(0).getY());
+		}	
 	}
 	//-----------------------Recibe arrays de pisos y los dibuja------------------------//
 	public void dibujarBloques(ArrayList<Bloques> todosLosPisos) {
@@ -164,7 +186,6 @@ public class Juego extends InterfaceJuego {
 		return false;
 	}
 	//-----------------------Eliminación de bloques luego de la colision------------------------//
-	
 	public void romperBloque() {	
 		for (int i = 0; i < todosLosPisos.size(); i++) {
 			Bloques bloque = todosLosPisos.get(i);

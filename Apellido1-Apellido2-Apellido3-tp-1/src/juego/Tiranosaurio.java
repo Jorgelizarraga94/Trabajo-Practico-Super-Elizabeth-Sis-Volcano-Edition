@@ -1,13 +1,15 @@
 package juego;
 import java.awt.Color;
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.Random;
 
 import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Tiranosaurio {
-	private double x = 500;
-	private double y = 565;
+	private int x = 500;
+	private int y = 565;
 	private double ANCHO = 30;
 	private double ALTO = 50;
 	private double angulo;
@@ -24,10 +26,10 @@ public class Tiranosaurio {
 		this.imagenIzq = Herramientas.cargarImagen("tiranosaurioIzq.png");
 		this.imagenDer = Herramientas.cargarImagen("tiranosaurio.png");
 		this.angulo = 0;
-		this.escala= 0.4;
+		this.escala= 0.15;
 	}
 	//----------------Getters y Setters-----------------//
-	public double getX() {
+	public int getX() {
 		return x;
 	}
 	
@@ -35,7 +37,7 @@ public class Tiranosaurio {
 		this.x = x;
 	}
 	
-	public double getY() {
+	public int getY() {
 		return y;
 	}
 	
@@ -83,10 +85,21 @@ public class Tiranosaurio {
 	public void movDer() {
 		this.x += 3;
 	}
-	
-	public void dibujar(Entorno entorno , Tiranosaurio [] tiranosaurios) {
-		for (int i = 0; i < tiranosaurios.length; i++) {
-			Tiranosaurio tira = tiranosaurios[i];
+	public void crearTiranosaurio(ArrayList<Tiranosaurio> tiranosaurios, Tiranosaurio [] tiranosaur ) {
+		
+		Random aleatorio = new Random();
+		for (int i = 0; i < tiranosaur.length; i++) {
+			if((aleatorio.nextInt(3)) % 6 == 0 || i == 3 ) {
+				tiranosaurios.add(tiranosaur[i]);	
+			}
+			else {
+				tiranosaurios.add(tiranosaur[i]);
+			}
+		}
+	}
+	public void dibujar(Entorno entorno , ArrayList<Tiranosaurio> tiranosaurios) {
+		for (int i = 0; i < tiranosaurios.size(); i++) {
+			Tiranosaurio tira = tiranosaurios.get(i);
 			if(i % 2 == 0) {
 				entorno.dibujarImagen(imagenIzq, tira.getX(), tira.getY(), tira.getAngulo(), tira.getEscala());
 			}
@@ -94,5 +107,15 @@ public class Tiranosaurio {
 				entorno.dibujarImagen(imagenDer, tira.getX(), tira.getY(), tira.getAngulo(), tira.getEscala());
 			}
 		}
+	}
+	public void disparoDer(Entorno entorno) {
+		entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.blue);
+		int bala =  this.x += 20;
+		this.x = bala;
+	}
+	public void disparoIzq(Entorno entorno) {
+		entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.red);
+		int bala =  this.x -= 20;
+		this.x = bala;
 	}
 }

@@ -131,7 +131,7 @@ public class Princesa {
 	public void saltar() {
         // Detectar si se presionó la tecla de salto
         if(this.enElSuelo) {
-            velocidadY = -10; // Ajusta este valor para cambiar la fuerza del salto
+            velocidadY = -10; //fuerza del salto
             this.enElSuelo = false;
         }
     }
@@ -142,31 +142,10 @@ public class Princesa {
             velocidadY += gravedad;
             this.y += velocidadY;
         }
-
-        if (this.y >= this.piso) { // Suponiendo que 550 es la posición del suelo
+        if (this.y >= this.piso) { 
         	this.setY(this.piso);
             this.velocidadY = 0;
             this.enElSuelo = true;
         }
-        /*if (this.y == 400) { // Suponiendo que 550 es la posición del suelo
-            this.setY(400);
-            this.velocidadY = 0;
-            this.enElSuelo = true;
-        }
-        if (this.y == 240) { // Suponiendo que 550 es la posición del suelo
-            this.setY(240);
-            this.velocidadY = 0;
-            this.enElSuelo = true;
-        }
-        if (this.y == 95) { // Suponiendo que 550 es la posición del suelo
-            this.setY(95);
-            this.velocidadY = 0;
-            this.enElSuelo = true;
-        }*/
-
     }
-	
-	
-	
-	
 }
