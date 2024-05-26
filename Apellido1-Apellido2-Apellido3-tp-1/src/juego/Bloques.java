@@ -9,8 +9,8 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Bloques {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	private int ancho;
 	private int alto;
 	private boolean seRompe;
@@ -37,11 +37,11 @@ public class Bloques {
 	}
 	
 	//----------Getters y Setter----------//
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 	
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 	
@@ -85,7 +85,7 @@ public class Bloques {
 	            continue; 
 	        }
 			if(bloque.seRompe) {
-				color = Color.red;
+				//color = Color.red;
 				//entorno.dibujarRectangulo(bloque.x, bloque.y, bloque.ancho, bloque.alto, 0, color);
 				entorno.dibujarImagen(bloqueSeRompe, bloque.x, bloque.y, this.angulo, this.escala);
 				imagen = bloqueSeRompe;

@@ -21,7 +21,8 @@ public class Juego extends InterfaceJuego {
 	private Proyectil proyectil;
 	private Proyectil proyectilTiranosaurio;
 	private boolean disparoLado;
-	
+
+
 	//-----------Variables de teclas--------------//
 	private char TECLA_X = 120;
 	private char TECLA_C = 99;
@@ -35,7 +36,7 @@ public class Juego extends InterfaceJuego {
 		//--------carga de imagen de fondo--------//
 		this.fondo = Herramientas.cargarImagen("lava.png");
 		this.bloque = new Bloques(); 
-		this.princesa = new Princesa(entorno.ancho()/2 , 557 , 1, 70); 
+		this.princesa = new Princesa(entorno.ancho()/2 , 557 , 10, 50); 
 		this.proyectil = new Proyectil(princesa.getX() , princesa.getY() , 20, 20);
 		this.tiranosaurio = new Tiranosaurio(); 
 		
@@ -49,7 +50,7 @@ public class Juego extends InterfaceJuego {
 		tiranosaurios = new Tiranosaurio[8]; 
 		//--------llamada al contructor de bloque y creación de pisos--------//
 		todosLosPisos = new ArrayList<Bloques>();
-		bloque.crearPiso(todosLosPisos,piso1 , 600,50,15); 
+		bloque.crearPiso(todosLosPisos,piso1 , 600,50,50); 
 		bloque.crearPiso(todosLosPisos,piso2, 450,50,50);
 		bloque.crearPiso(todosLosPisos,piso3 , 300,50,50);
 		bloque.crearPiso(todosLosPisos,piso4 , 150,50,50);
@@ -90,12 +91,41 @@ public class Juego extends InterfaceJuego {
 			this.princesa.dibujarIzq(this.entorno);
 			princesa.movIzq();
 			this.disparoLado = true;
+			for(int i = 0; i < todosLosPisos.size(); i++) {
+				 //Bloques bloque = todosLosPisos.get(i);
+				if(colisionPrincesaBloque(todosLosPisos.get(i))) {
+					System.out.println("colisiona");
+				}
+				else {
+					princesa.setEnElSuelo(false);
+					princesa.setPiso(540);
+					if(colisionPiesBloque(todosLosPisos.get(i))){
+						princesa.setPiso(princesa.getY());
+						
+					}
+				}
+			}
 		}
 		//--------MOVIMIENTO DERECHA--------//
 		if(this.entorno.estaPresionada(this.entorno.TECLA_DERECHA) && princesa.getX() < 970) {
 			princesa.movDer();
 			this.disparoLado = false;
+			for(int i = 0; i < todosLosPisos.size(); i++) {
+				 //Bloques bloque = todosLosPisos.get(i);
+				if(colisionPrincesaBloque(todosLosPisos.get(i))) {
+					System.out.println("colisiona");
+				}
+				else {
+					princesa.setEnElSuelo(false);
+					princesa.setPiso(540);
+					if(colisionPiesBloque(todosLosPisos.get(i))){
+						princesa.setPiso(princesa.getY());
+						
+					}
+				}
+			}
 		}
+	
 		//--------DISPARO IZQUIERDA--------//
 		if(this.entorno.sePresiono(this.TECLA_C) && proyectil != null && disparoLado == true && proyectil.getX() >0 ) {
 				proyectil.setDisparoActivo(true);			
@@ -109,18 +139,30 @@ public class Juego extends InterfaceJuego {
 		//--------SI PRESIONA LA TECLA X SALTA, ROMPE LOS BLOQUES Y CAMBIA LA GRAVEDAD PARA SIMULAR COLISION--------//
 		if(this.entorno.estaPresionada(this.TECLA_X)) {
 			 princesa.saltar();
-			 
+			 for(int i = 0; i < todosLosPisos.size(); i++) {
+				 Bloques bloque = todosLosPisos.get(i);
+				if(colisionPiesBloque(bloque) && bloque == null) {
+					princesa.setVelocidadY(+10);
+				}
+			}
 			 romperBloque(); 
 		 }
-		/*for(int i = 0; i < todosLosPisos.size(); i++) {
+		for(int i = 0; i < todosLosPisos.size(); i++) {
 			 Bloques bloque = todosLosPisos.get(i);
+			 
+			 System.out.println(princesa.getY());
+			 
 				if(colisionCabezaBloque(bloque)) {
 					princesa.setVelocidadY(+10);
 				}
-		}*/
-		
-		princesa.actualizarSalto();
+				if(colisionPiesBloque(bloque)){
+					princesa.setPiso(princesa.getY());
+					
+				}
+		}
+	princesa.actualizarSalto();
 	}
+	//----------------------------METODOS------------------------------------//
 	public void disparar(Proyectil proyectil , boolean disparoLado) {
 //--------CONTROL DE DIRECCIÓN DEL DISPARO----------//
 		if(proyectil!= null && proyectil.getDisparoActivo() == true && disparoLado == true) {
@@ -141,9 +183,6 @@ public class Juego extends InterfaceJuego {
 		if(proyectil!= null ) {
 			proyectil.disparoIzq(entorno);
 		}
-		/*if(proyectil!= null) {
-			proyectil.disparoDer(entorno);
-		}*/
 		//--------LUEGO DE DISPARAR, PONEMOS AL PROYECTIL EN NULL Y VOLVEMOS A CREARLO--------//
 		if(proyectil != null && this.proyectil.getX() >= 1000 ||proyectil != null && this.proyectil.getX() <= 0) {
 			this.proyectil = null;
@@ -161,8 +200,8 @@ public class Juego extends InterfaceJuego {
 	}
 	//-----------------------Colisión entre el pie de la princesa y la parte superior del bloque------------------------//
 	public boolean colisionPiesBloque(Bloques bloque) {
-		boolean colisionY = colisionPrincesaBloque(bloque) && princesa.getY() + princesa.getAlto()/2 > bloque.getY() - bloque.getAlto()/2
-														   && princesa.getY() + princesa.getAlto()/2 < (bloque.getY() - bloque.getAlto()/2)+5;
+		boolean colisionY = colisionPrincesaBloque(bloque) && princesa.getY() + ((princesa.getAlto()/2)+3) > bloque.getY() - bloque.getAlto()/2
+														   && princesa.getY() + ((princesa.getAlto()/2)+3) < (bloque.getY() + (bloque.getAlto()/2)+10);
 		return colisionY;
 	}
 	//-----------------------Colisión entre la cabeza y la parte inferior del bloque------------------------//
@@ -182,7 +221,10 @@ public class Juego extends InterfaceJuego {
 			boolean colision = colisionX && colisionY;
 			return colision;
 		}
-		return false;
+		else {
+			return false;
+		}
+		
 	}
 	//-----------------------Eliminación de bloques luego de la colision------------------------//
 	public void romperBloque() {	
@@ -194,11 +236,8 @@ public class Juego extends InterfaceJuego {
 					todosLosPisos.set(i, null);
 				}
 			}
-		
-			
 		}
 	}
-	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		Juego juego = new Juego();

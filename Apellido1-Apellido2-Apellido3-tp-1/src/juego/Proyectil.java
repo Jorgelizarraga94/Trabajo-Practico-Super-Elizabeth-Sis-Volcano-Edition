@@ -5,15 +5,15 @@ import java.awt.Color;
 import entorno.Entorno;
 
 public class Proyectil {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	private int ANCHO = 10;
 	private int ALTO = 10;
 	private boolean disparoActivo = false;
 	private Entorno entorno;
 	//----------------Constructores-----------------//
 	public Proyectil() {}
-	public Proyectil(int x, int y, int ANCHO, int ALTO) {
+	public Proyectil(double x, double y, int ANCHO, int ALTO) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -21,7 +21,7 @@ public class Proyectil {
 		this.ALTO = ALTO;
 	}
 	//----------------Getters y Setters-----------------//
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 	
@@ -29,7 +29,7 @@ public class Proyectil {
 		this.x = x;
 	}
 	
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 	
@@ -61,12 +61,12 @@ public class Proyectil {
 	//----------------Metodos-----------------//
 	public void disparoDer(Entorno entorno) {
 		entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.blue);
-		int bala =  this.x += 20;
+		double bala =  this.x += 20;
 		this.x = bala;
 	}
 	public void disparoIzq(Entorno entorno) {
 		entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.red);
-		int bala =  this.x -= 20;
+		double bala =  this.x -= 20;
 		this.x = bala;
 	}
 }

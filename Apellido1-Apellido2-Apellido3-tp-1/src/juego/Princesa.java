@@ -7,11 +7,11 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Princesa {
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	private int ancho;
 	private int alto;
-	private int piso = 557;
+	private double piso = 540;
 	private Image imagenDer;
 	private Image imagenIzq;
 	private double angulo;
@@ -22,6 +22,7 @@ public class Princesa {
 	private boolean enElSuelo = true;  // Variable para verificar si el personaje está en el suelo
 	private double velocidadY = 0;     // Velocidad vertical del personaje
 	private double gravedad = 0.3; 		// Gravedad del personaje
+	
 	
 	//----------constructor----------//
 	public Princesa(int x, int y, int ancho, int alto) {
@@ -45,7 +46,7 @@ public class Princesa {
 		this.velocidadY = velocidadY;
 	}
 	
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 
@@ -53,11 +54,11 @@ public class Princesa {
 		this.x = x;
 	}
 
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 
@@ -101,14 +102,23 @@ public class Princesa {
 		this.gravedad = gravedad;
 	}
 	
-	public int getPiso() {
+	public double getPiso() {
 		return piso;
 	}
 	
-	public void setPiso(int piso) {
+	public void setPiso(double piso) {
 		this.piso = piso;
 	}
 	
+	public boolean getEnElSuelo() {
+		return enElSuelo;
+	}
+
+	public void setEnElSuelo(boolean enElSuelo) {
+		this.enElSuelo = enElSuelo;
+	}
+	
+
 	//----------Getters y Setters----------//
 	public void dibujarDer(Entorno entorno) {
 		//entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.blue);
@@ -133,16 +143,17 @@ public class Princesa {
         if(this.enElSuelo) {
             velocidadY = -10; //fuerza del salto
             this.enElSuelo = false;
+            
         }
     }
-	 
+	
     public void actualizarSalto() {
         // Aplicar gravedad en cada frame
         if (!enElSuelo) {
             velocidadY += gravedad;
             this.y += velocidadY;
         }
-        if (this.y >= this.piso) { 
+        if (this.y >= this.piso) {
         	this.setY(this.piso);
             this.velocidadY = 0;
             this.enElSuelo = true;
