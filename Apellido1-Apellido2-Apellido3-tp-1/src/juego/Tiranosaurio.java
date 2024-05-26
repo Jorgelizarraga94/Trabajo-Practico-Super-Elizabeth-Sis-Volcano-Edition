@@ -16,6 +16,10 @@ public class Tiranosaurio {
 	private double escala;
 	private Image imagenIzq = Herramientas.cargarImagen("tiranosaurioIzq.png");
 	private Image imagenDer = Herramientas.cargarImagen("tiranosaurio.png");
+	private boolean tocoPantallaIzq = false;
+	private boolean tocoPantallaDer = false;
+	private boolean disparoLadoTiranosaurios;
+	
 	//----------------Constructores-----------------//
 	public Tiranosaurio() {}
 	public Tiranosaurio(int x, int y, int ANCHO, int ALTO) {
@@ -77,24 +81,53 @@ public class Tiranosaurio {
 		this.escala = escala;
 	}
 	
+	
+	public boolean getDisparoLadoTiranosaurios() {
+		return disparoLadoTiranosaurios;
+	}
+	public void setDisparoLadoTiranosaurios(boolean disparoLadoTiranosaurios) {
+		this.disparoLadoTiranosaurios = disparoLadoTiranosaurios;
+	}
 	//----------------Metodos-----------------//
 	public void movIzq() {
-		this.x -= 3;
+		if(tocoPantallaIzq == false) {
+			this.x -= 3;
+			disparoLadoTiranosaurios = true;
+		}
+		else if(tocoPantallaIzq == true){
+			this.x = this.x+=3;
+			disparoLadoTiranosaurios = false;
+		}
 	}
-	
+	public boolean tocoPantallaDinoComienzaSentidoIzq() {
+		if(this.x < 31) {
+			tocoPantallaIzq = true;
+		}
+		if(this.x > 975) {
+			tocoPantallaIzq = false;
+		}
+		return tocoPantallaIzq;
+	}
 	public void movDer() {
-		this.x += 3;
+		if(tocoPantallaDer == false) {
+			this.x += 3;
+		}
+		else if(tocoPantallaDer == true){
+			this.x = this.x-=3;
+		}
+	}
+	public boolean tocoPantallaDinoComienzaSentidoDer() {
+		if(this.x < 31) {
+			tocoPantallaDer = false;
+		}
+		if(this.x > 975) {
+			tocoPantallaDer = true;
+		}
+		return tocoPantallaDer;
 	}
 	public void crearTiranosaurio(ArrayList<Tiranosaurio> tiranosaurios, Tiranosaurio [] tiranosaur ) {
-		
-		Random aleatorio = new Random();
 		for (int i = 0; i < tiranosaur.length; i++) {
-			if((aleatorio.nextInt(3)) % 6 == 0 || i == 3 ) {
-				tiranosaurios.add(tiranosaur[i]);	
-			}
-			else {
-				tiranosaurios.add(tiranosaur[i]);
-			}
+			tiranosaurios.add(tiranosaur[i]);	
 		}
 	}
 	public void dibujar(Entorno entorno , ArrayList<Tiranosaurio> tiranosaurios) {
@@ -108,14 +141,5 @@ public class Tiranosaurio {
 			}
 		}
 	}
-	public void disparoDer(Entorno entorno) {
-		entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.blue);
-		int bala =  this.x += 20;
-		this.x = bala;
-	}
-	public void disparoIzq(Entorno entorno) {
-		entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.red);
-		int bala =  this.x -= 20;
-		this.x = bala;
-	}
+
 }

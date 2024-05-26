@@ -18,6 +18,7 @@ public class Princesa {
 	private double escala;
 	private Entorno entorno;
 	private Bloques bloque;
+	private boolean disparoLadoPrincesa;
 	//----------Variables de salto----------//
 	private boolean enElSuelo = true;  // Variable para verificar si el personaje está en el suelo
 	private double velocidadY = 0;     // Velocidad vertical del personaje
@@ -50,7 +51,7 @@ public class Princesa {
 		return x;
 	}
 
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = x;
 	}
 
@@ -119,6 +120,14 @@ public class Princesa {
 	}
 	
 
+	public boolean getDisparoLadoPrincesa() {
+		return disparoLadoPrincesa;
+	}
+
+	public void setDisparoLadoPrincesa(boolean disparoLadoPrincesa) {
+		this.disparoLadoPrincesa = disparoLadoPrincesa;
+	}
+
 	//----------Getters y Setters----------//
 	public void dibujarDer(Entorno entorno) {
 		//entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.blue);
@@ -133,20 +142,16 @@ public class Princesa {
 	public void movIzq() {
 		this.x -= 3;
 	}
-	
 	public void movDer() {
 		this.x += 3;
 	}
-	
 	public void saltar() {
         // Detectar si se presionó la tecla de salto
-        if(this.enElSuelo) {
+        if(this.enElSuelo){
             velocidadY = -10; //fuerza del salto
             this.enElSuelo = false;
-            
         }
     }
-	
     public void actualizarSalto() {
         // Aplicar gravedad en cada frame
         if (!enElSuelo) {

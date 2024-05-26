@@ -1,8 +1,9 @@
 package juego;
 
 import java.awt.Color;
-
+import java.awt.Image;
 import entorno.Entorno;
+import entorno.Herramientas;
 
 public class Proyectil {
 	private double x;
@@ -11,6 +12,7 @@ public class Proyectil {
 	private int ALTO = 10;
 	private boolean disparoActivo = false;
 	private Entorno entorno;
+	private Image imagen;
 	//----------------Constructores-----------------//
 	public Proyectil() {}
 	public Proyectil(double x, double y, int ANCHO, int ALTO) {
@@ -19,6 +21,7 @@ public class Proyectil {
 		this.y = y;
 		this.ANCHO = ANCHO;
 		this.ALTO = ALTO;
+		imagen = Herramientas.cargarImagen("bolaDeFuego.png");
 	}
 	//----------------Getters y Setters-----------------//
 	public double getX() {
@@ -59,14 +62,16 @@ public class Proyectil {
 		this.disparoActivo = disparoActivo;
 	}
 	//----------------Metodos-----------------//
-	public void disparoDer(Entorno entorno) {
-		entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.blue);
-		double bala =  this.x += 20;
+	public void disparoDer(Entorno entorno ,int velocidadDisparo) {
+		//entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.blue);
+		double bala =  this.x += velocidadDisparo;
 		this.x = bala;
+		entorno.dibujarImagen(imagen, this.x, this.y, 0, 0.2);
 	}
-	public void disparoIzq(Entorno entorno) {
-		entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.red);
-		double bala =  this.x -= 20;
+	public void disparoIzq(Entorno entorno , int velocidadDisparo) {
+		//entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.red);
+		double bala =  this.x -= velocidadDisparo;
 		this.x = bala;
+		entorno.dibujarImagen(imagen, this.x, this.y, 0, 0.2);
 	}
 }
