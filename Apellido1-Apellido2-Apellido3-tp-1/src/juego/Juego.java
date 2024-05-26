@@ -22,11 +22,6 @@ public class Juego extends InterfaceJuego {
 	private Tiranosaurio tiranosaurio;
 	private Proyectil proyectil;
 	
-	
-	//-----------Variables de teclas--------------//
-	private char TECLA_X = 120;
-	private char TECLA_C = 99;
-	
 	private Image fondo;
 
 	Juego() {
@@ -122,19 +117,17 @@ public class Juego extends InterfaceJuego {
 			}	
 		}
 		//--------DISPARO IZQUIERDA--------//
-		if(this.entorno.estaPresionada(this.TECLA_C) && proyectil != null && princesa.getDisparoLadoPrincesa() == true && proyectil.getX() >0 ) {
+		if(this.entorno.estaPresionada('c') && proyectil != null && princesa.getDisparoLadoPrincesa() == true && proyectil.getX() >0 ) {
 				proyectil.setDisparoActivo(true);			
 		}
 		//--------DISPARO DERECHA--------//
-		if(this.entorno.estaPresionada(this.TECLA_C) && proyectil != null && princesa.getDisparoLadoPrincesa() == false && proyectil.getX() < 1000 ) {
+		if(this.entorno.estaPresionada('c') && proyectil != null && princesa.getDisparoLadoPrincesa() == false && proyectil.getX() < 1000 ) {
 			proyectil.setDisparoActivo(true);
 		}
 		//--------DISPARO PRINCESA------------//
 		disparoPrincesa(this.proyectil, princesa.getDisparoLadoPrincesa());
-
-		
 		//--------SI PRESIONA LA TECLA X SALTA, ROMPE LOS BLOQUES Y CAMBIA LA GRAVEDAD PARA SIMULAR COLISION--------//
-		if(this.entorno.estaPresionada(this.TECLA_X)) {
+		if(this.entorno.estaPresionada('x')) {
 			 princesa.saltar();
 			 for(int i = 0; i < todosLosPisos.size(); i++) {
 				 Bloques bloque = todosLosPisos.get(i);
