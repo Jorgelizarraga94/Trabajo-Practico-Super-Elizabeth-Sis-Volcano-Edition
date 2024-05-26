@@ -1,6 +1,5 @@
 package juego;
 
-import java.awt.Color;
 import java.awt.Image;
 import entorno.Entorno;
 import entorno.Herramientas;
@@ -11,10 +10,8 @@ public class Proyectil {
 	private int ANCHO = 10;
 	private int ALTO = 10;
 	private boolean disparoActivo = false;
-	private Entorno entorno;
 	private Image imagen;
 	//----------------Constructores-----------------//
-	public Proyectil() {}
 	public Proyectil(double x, double y, int ANCHO, int ALTO) {
 		super();
 		this.x = x;
@@ -55,9 +52,11 @@ public class Proyectil {
 	public void setALTO(int ALTO) {
 		this.ALTO = ALTO;
 	}
+	
 	public boolean getDisparoActivo() {
 		return disparoActivo;
 	}
+	
 	public void setDisparoActivo(boolean disparoActivo) {
 		this.disparoActivo = disparoActivo;
 	}
@@ -68,10 +67,12 @@ public class Proyectil {
 		this.x = bala;
 		entorno.dibujarImagen(imagen, this.x, this.y, 0, 0.2);
 	}
+	
 	public void disparoIzq(Entorno entorno , int velocidadDisparo) {
 		//entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.red);
 		double bala =  this.x -= velocidadDisparo;
 		this.x = bala;
 		entorno.dibujarImagen(imagen, this.x, this.y, 0, 0.2);
 	}
+	
 }

@@ -16,15 +16,11 @@ public class Bloques {
 	private boolean seRompe;
 	private double angulo;
 	private double escala;
-	private Entorno entorno;
-	private Random random;
 	private Image bloqueSeRompe = Herramientas.cargarImagen("bloqueSeRompe.png");
 	private Image bloqueNoSeRompe = Herramientas.cargarImagen("bloqueNoSeRompe.png");
-	private Image imagen;
 	
 	//----------Constructores----------//
 	public Bloques() {}
-	
 	public Bloques(int x, int y, int ancho, int alto , boolean seRompe ){
 		super();
 		this.x = x;
@@ -75,7 +71,6 @@ public class Bloques {
 			}
 		}
 	}
-
 	//-----------Recibe un array de bloques y los dibuja---------------//
 	public void dibujar(Entorno entorno , ArrayList<Bloques> todosLosPisos) {
 		Color color;
@@ -87,14 +82,12 @@ public class Bloques {
 			if(bloque.seRompe) {
 				//color = Color.red;
 				//entorno.dibujarRectangulo(bloque.x, bloque.y, bloque.ancho, bloque.alto, 0, color);
-				entorno.dibujarImagen(bloqueSeRompe, bloque.x, bloque.y, this.angulo, this.escala);
-				imagen = bloqueSeRompe;
+				entorno.dibujarImagen(bloqueSeRompe, bloque.x, bloque.y, this.angulo, this.escala);	
 			}
 			else {
 				//color = Color.BLUE;
 				//entorno.dibujarRectangulo(bloque.x, bloque.y, bloque.ancho, bloque.alto, 0, color);
 				entorno.dibujarImagen(bloqueNoSeRompe, bloque.x, bloque.y, this.angulo, this.escala);
-				imagen = bloqueNoSeRompe;
 			}
 		}
 	}

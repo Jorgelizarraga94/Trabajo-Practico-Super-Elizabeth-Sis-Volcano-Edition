@@ -3,7 +3,6 @@ package juego;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Random;
-
 import entorno.Entorno;
 import entorno.Herramientas;
 import entorno.InterfaceJuego;
@@ -17,12 +16,11 @@ public class Juego extends InterfaceJuego {
 	private Bloques [] piso4;
 	private ArrayList <Bloques> todosLosPisos;
 	private ArrayList <Tiranosaurio> listaTiranosaurio;
-	private ArrayList <Proyectil> proyectilDino;
+	private ArrayList <Bomba> bombaDino;
 	private Princesa princesa; 
 	private Tiranosaurio [] tiranosaurios;
 	private Tiranosaurio tiranosaurio;
 	private Proyectil proyectil;
-	private Proyectil [] proyectilTiranosaurio;
 	
 	
 	//-----------Variables de teclas--------------//
@@ -41,43 +39,36 @@ public class Juego extends InterfaceJuego {
 		this.princesa = new Princesa(entorno.ancho()/2 , 557 , 10, 50); 
 		this.proyectil = new Proyectil(princesa.getX() , princesa.getY() , 20, 20);
 		this.tiranosaurio = new Tiranosaurio(); 
-		
+		Random numeroAleatorio = new Random();
 		//--------Reserva de 20 espacios para bloques--------//
 		piso1 = new Bloques[20]; 
 		piso2 = new Bloques[20];
 		piso3 = new Bloques[20];
 		piso4 = new Bloques[20];
-		
 		//--------Reserva de 8 espacios para tiranosaurios--------//
 		tiranosaurios = new Tiranosaurio[8]; 
-		proyectilTiranosaurio = new Proyectil[8];
-		//--------llamada al contructor de bloque y creación de pisos--------//
+		//--------Inicialización de la lista de Bloques y creación de pisos--------//
 		todosLosPisos = new ArrayList<Bloques>();
 		bloque.crearPiso(todosLosPisos,piso1 , 600,50,50); 
 		bloque.crearPiso(todosLosPisos,piso2, 450,50,50);
 		bloque.crearPiso(todosLosPisos,piso3 , 300,50,50);
 		bloque.crearPiso(todosLosPisos,piso4 , 150,50,50);
+		//--------Inicialización de la lista de Tiranosaurio y creación de Tiranosaurios--------//
 		listaTiranosaurio = new ArrayList<Tiranosaurio>();
-		proyectilDino = new ArrayList <Proyectil>();
-		Random valor = new Random();
-		tiranosaurios[0] = new Tiranosaurio(valor.nextInt(50, 900), 540 , 20 , 20);
-		tiranosaurios[1] = new Tiranosaurio(valor.nextInt(50, 900) , 540 , 20 , 20);
-		tiranosaurios[2] = new Tiranosaurio(valor.nextInt(50, 900) , 400 , 20 , 20);
-		tiranosaurios[3] = new Tiranosaurio(valor.nextInt(50, 900) , 400 , 20 , 20);
-		tiranosaurios[4] = new Tiranosaurio(valor.nextInt(50, 900) , 240 , 20 , 20);
-		tiranosaurios[5] = new Tiranosaurio(valor.nextInt(50, 900) , 240 , 20 , 20);
-		tiranosaurios[6] = new Tiranosaurio(valor.nextInt(50, 900) , 95 , 20 , 20);
-		tiranosaurios[7] = new Tiranosaurio(valor.nextInt(50, 900) , 95 , 20 , 20);
+		bombaDino = new ArrayList <Bomba>();
+		tiranosaurios[0] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900), 540 , 20 , 20);
+		tiranosaurios[1] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 540 , 20 , 20);
+		tiranosaurios[2] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 400 , 20 , 20);
+		tiranosaurios[3] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 400 , 20 , 20);
+		tiranosaurios[4] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 240 , 20 , 20);
+		tiranosaurios[5] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 240 , 20 , 20);
+		tiranosaurios[6] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 95 , 20 , 20);
+		tiranosaurios[7] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 95 , 20 , 20);
 		tiranosaurio.crearTiranosaurio(listaTiranosaurio, tiranosaurios);
 		//-----------------Proyectil tiranosaurio-----------------//
-		
 		for (int i = 0; i < listaTiranosaurio.size(); i++) {
-			proyectilTiranosaurio[i] = new Proyectil(listaTiranosaurio.get(i).getX(),listaTiranosaurio.get(i).getY(),20,20);
-			proyectilDino.add(proyectilTiranosaurio[i]); 
+			bombaDino.add(new Bomba(listaTiranosaurio.get(i).getX(),listaTiranosaurio.get(i).getY(),20,20)); 
 		}
-		
-		
-		
 		// Inicia el juego!
 		this.entorno.iniciar();
 	}
@@ -153,37 +144,14 @@ public class Juego extends InterfaceJuego {
 			 }
 			 romperBloque(); 
 		}
-		for(int i = 0; i < todosLosPisos.size(); i++) {
-			 Bloques bloque = todosLosPisos.get(i);
-			 
-				if(colisionCabezaBloque(bloque)) {
-					princesa.setVelocidadY(+10);
-				}
-				if(colisionPiesBloque(bloque)){
-					princesa.setPiso(princesa.getY());
-				}
-				if(colisionPrincesaBloque(bloque)) {
-					princesa.setX(princesa.getX());
-				}
-		}
+		//---------------------COMPROBACIÓN DE COLISIONES ENTRE PRINCESA Y BLOQUES-------//
+		comprobaciónDeColisiones();
 		//----------------------MOVIMIENTO DE TIRANOSAURIOS----------------------------//
-		for (int i = 0; i < listaTiranosaurio.size(); i++) {
-			if(i % 2 == 0) {
-				listaTiranosaurio.get(i).movDer();
-				Tiranosaurio tiranosaurioDer = listaTiranosaurio.get(i);
-			}
-			else {
-				listaTiranosaurio.get(i).movIzq();
-				Tiranosaurio tiranosaurioIzq = listaTiranosaurio.get(i);
-			}
-			listaTiranosaurio.get(i).tocoPantallaDinoComienzaSentidoIzq();
-			listaTiranosaurio.get(i).tocoPantallaDinoComienzaSentidoDer();
-		}
-		//--------DISPARO TIRANOSAURIO------------//
-		disparoTiranosaurio(proyectilDino);
+		moverTiranosaurios();
+		//----------------------DISPARO TIRANOSAURIO-----------------------------------//
+		disparoTiranosaurio(bombaDino);	
 		
-		
-	princesa.actualizarSalto();
+		princesa.actualizarSalto();
 	}
 	//----------------------------------------METODOS-------------------------------------------------------------------------------//
 	public void disparoPrincesa(Proyectil proyectil , boolean disparoLado) {
@@ -202,20 +170,33 @@ public class Juego extends InterfaceJuego {
 		}	
 	}
 	
-	public void disparoTiranosaurio(ArrayList<Proyectil> proyectil) {
+	public void moverTiranosaurios() {
+		for (int i = 0; i < listaTiranosaurio.size(); i++) {
+			if(i % 2 == 0) {
+				listaTiranosaurio.get(i).movDer();
+			}
+			else {
+				listaTiranosaurio.get(i).movIzq();
+			}
+			listaTiranosaurio.get(i).tocoPantallaDinoComienzaSentidoIzq();
+			listaTiranosaurio.get(i).tocoPantallaDinoComienzaSentidoDer();
+		}
+	}
+	
+	public void disparoTiranosaurio(ArrayList<Bomba> proyectil) {
 	//--------CONTROL DE DIRECCIÓN DEL DISPARO----------//
 		for (int i = 0; i < proyectil.size(); i++) {
 			if(proyectil.get(i)!= null && listaTiranosaurio.get(i).getDisparoLadoTiranosaurios() == true) {
-				proyectil.get(i).disparoIzq(entorno, 5);
+				proyectil.get(i).disparoIzq(entorno, 3);
 			}
 			if(proyectil.get(i)!= null && listaTiranosaurio.get(i).getDisparoLadoTiranosaurios() == false ) {
-				proyectil.get(i).disparoDer(entorno,5);
+				proyectil.get(i).disparoDer(entorno,3);
 			}
 			//--------LUEGO DE DISPARAR, PONEMOS AL PROYECTIL EN NULL Y VOLVEMOS A CREARLO--------//
 			if(proyectil != null && proyectil.get(i).getX() >= 1000 ||proyectil.get(i) != null && proyectil.get(i).getX() <= 0) {
 				System.out.println("entra");
 				
-				Proyectil nuevoProyectil = new Proyectil(listaTiranosaurio.get(i).getX() ,listaTiranosaurio.get(i).getY(),20,20);
+				Bomba nuevoProyectil = new Bomba(listaTiranosaurio.get(i).getX() ,listaTiranosaurio.get(i).getY(),20,20);
 				proyectil.set(i, nuevoProyectil);
 			}
 		}	
@@ -227,6 +208,18 @@ public class Juego extends InterfaceJuego {
 	            todosLosPisos.get(i).dibujar(entorno, todosLosPisos);
 	        }
 	    }
+	}
+	
+	public void comprobaciónDeColisiones() {
+		for(int i = 0; i < todosLosPisos.size(); i++) {
+			 Bloques bloque = todosLosPisos.get(i); 
+				if(colisionCabezaBloque(bloque)) {
+					princesa.setVelocidadY(+10);
+				}
+				if(colisionPiesBloque(bloque)){
+					princesa.setPiso(princesa.getY());
+				}
+		}
 	}
 	//-----------------------Colisión entre el pie de la princesa y la parte superior del bloque------------------------//
 	public boolean colisionPiesBloque(Bloques bloque) {
@@ -255,6 +248,7 @@ public class Juego extends InterfaceJuego {
 			return false;
 		}
 	}
+	
 	public boolean colisionTiranosaurios(Tiranosaurio tiranosaurio) {
 		if(tiranosaurios != null) {
 			boolean colisionX = tiranosaurio.getX() - tiranosaurio.getANCHO()/2 > tiranosaurio.getX() + tiranosaurio.getANCHO()/2 && tiranosaurio.getX() - tiranosaurio.getANCHO()/2 < tiranosaurio.getX() - tiranosaurio.getANCHO()/2 ||

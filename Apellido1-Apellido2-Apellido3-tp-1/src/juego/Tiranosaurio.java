@@ -1,4 +1,5 @@
 package juego;
+
 import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Tiranosaurio {
 	private boolean tocoPantallaIzq = false;
 	private boolean tocoPantallaDer = false;
 	private boolean disparoLadoTiranosaurios;
+	private boolean disparoLadoTiranosaurios2;
 	
 	//----------------Constructores-----------------//
 	public Tiranosaurio() {}
@@ -81,24 +83,25 @@ public class Tiranosaurio {
 		this.escala = escala;
 	}
 	
-	
 	public boolean getDisparoLadoTiranosaurios() {
 		return disparoLadoTiranosaurios;
 	}
+	
 	public void setDisparoLadoTiranosaurios(boolean disparoLadoTiranosaurios) {
 		this.disparoLadoTiranosaurios = disparoLadoTiranosaurios;
 	}
 	//----------------Metodos-----------------//
 	public void movIzq() {
 		if(tocoPantallaIzq == false) {
-			this.x -= 3;
+			this.x -= 1.5;
 			disparoLadoTiranosaurios = true;
 		}
 		else if(tocoPantallaIzq == true){
-			this.x = this.x+=3;
+			this.x = this.x+=1.5;
 			disparoLadoTiranosaurios = false;
 		}
 	}
+	
 	public boolean tocoPantallaDinoComienzaSentidoIzq() {
 		if(this.x < 31) {
 			tocoPantallaIzq = true;
@@ -108,14 +111,16 @@ public class Tiranosaurio {
 		}
 		return tocoPantallaIzq;
 	}
+	
 	public void movDer() {
 		if(tocoPantallaDer == false) {
-			this.x += 3;
+			this.x += 1.5;
 		}
 		else if(tocoPantallaDer == true){
-			this.x = this.x-=3;
+			this.x = this.x-=1.5;
 		}
 	}
+	
 	public boolean tocoPantallaDinoComienzaSentidoDer() {
 		if(this.x < 31) {
 			tocoPantallaDer = false;
@@ -125,11 +130,13 @@ public class Tiranosaurio {
 		}
 		return tocoPantallaDer;
 	}
+	
 	public void crearTiranosaurio(ArrayList<Tiranosaurio> tiranosaurios, Tiranosaurio [] tiranosaur ) {
 		for (int i = 0; i < tiranosaur.length; i++) {
 			tiranosaurios.add(tiranosaur[i]);	
 		}
 	}
+	
 	public void dibujar(Entorno entorno , ArrayList<Tiranosaurio> tiranosaurios) {
 		for (int i = 0; i < tiranosaurios.size(); i++) {
 			Tiranosaurio tira = tiranosaurios.get(i);

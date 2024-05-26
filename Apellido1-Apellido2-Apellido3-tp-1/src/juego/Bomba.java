@@ -1,21 +1,27 @@
 package juego;
 
+import java.awt.Image;
+import entorno.Entorno;
+import entorno.Herramientas;
+
 public class Bomba {
-	int x;
-	int y;
-	int ANCHO = 10;
-	int ALTO = 10;
+	private double x;
+	private double y;
+	private int ANCHO = 10;
+	private int ALTO = 10;
+	private Image imagen;
+	
 	//----------------Constructores-----------------//
-	public Bomba(){}
 	public Bomba(int x, int y, int aNCHO, int aLTO) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.ANCHO = ANCHO;
 		this.ALTO = ALTO;
+		this.imagen = Herramientas.cargarImagen("bombaTiranosaurio.png");
 	}
 	//----------------Getters y Setters-----------------//
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 	
@@ -23,7 +29,7 @@ public class Bomba {
 		this.x = x;
 	}
 	
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 	
@@ -45,6 +51,20 @@ public class Bomba {
 	
 	public void setALTO(int ALTO) {
 		this.ALTO = ALTO;
+	}
+	
+	public void disparoDer(Entorno entorno ,int velocidadDisparo) {
+		//entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.blue);
+		double bala =  this.x += velocidadDisparo;
+		this.x = bala;
+		entorno.dibujarImagen(imagen, this.x, this.y +20, 0, 0.09);
+	}
+	
+	public void disparoIzq(Entorno entorno , int velocidadDisparo) {
+		//entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.red);
+		double bala =  this.x -= velocidadDisparo;
+		this.x = bala;
+		entorno.dibujarImagen(imagen, this.x, this.y + 20, 0, 0.09);
 	}
 	
 }

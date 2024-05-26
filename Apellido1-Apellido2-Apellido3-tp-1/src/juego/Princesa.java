@@ -2,7 +2,6 @@ package juego;
 
 import java.awt.Color;
 import java.awt.Image;
-
 import entorno.Entorno;
 import entorno.Herramientas;
 
@@ -16,8 +15,6 @@ public class Princesa {
 	private Image imagenIzq;
 	private double angulo;
 	private double escala;
-	private Entorno entorno;
-	private Bloques bloque;
 	private boolean disparoLadoPrincesa;
 	//----------Variables de salto----------//
 	private boolean enElSuelo = true;  // Variable para verificar si el personaje está en el suelo
@@ -119,7 +116,6 @@ public class Princesa {
 		this.enElSuelo = enElSuelo;
 	}
 	
-
 	public boolean getDisparoLadoPrincesa() {
 		return disparoLadoPrincesa;
 	}
@@ -142,9 +138,11 @@ public class Princesa {
 	public void movIzq() {
 		this.x -= 3;
 	}
+	
 	public void movDer() {
 		this.x += 3;
 	}
+	
 	public void saltar() {
         // Detectar si se presionó la tecla de salto
         if(this.enElSuelo){
@@ -152,6 +150,7 @@ public class Princesa {
             this.enElSuelo = false;
         }
     }
+	
     public void actualizarSalto() {
         // Aplicar gravedad en cada frame
         if (!enElSuelo) {
