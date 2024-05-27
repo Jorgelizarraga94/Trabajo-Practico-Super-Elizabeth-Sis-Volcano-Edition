@@ -10,7 +10,7 @@ public class Princesa {
 	private double y;
 	private int ancho;
 	private int alto;
-	private double piso = 540;
+	private double piso = 750;
 	private Image imagenDer;
 	private Image imagenIzq;
 	private double angulo;
@@ -29,10 +29,10 @@ public class Princesa {
 		this.y = y;
 		this.ancho = ancho;
 		this.alto = alto;
-		this.imagenDer = Herramientas.cargarImagen("princesaDer.png");
-		this.imagenIzq = Herramientas.cargarImagen("princesaIzq.png");
+		this.imagenDer = Herramientas.cargarImagen("goten.gif");
+		this.imagenIzq = Herramientas.cargarImagen("goten.gif");
 		this.angulo = 0;
-		this.escala = 0.04;
+		this.escala = 1;
 	}
 	
     //----------Getters y Setters----------//
@@ -146,7 +146,7 @@ public class Princesa {
 	public void saltar() {
         // Detectar si se presionó la tecla de salto
         if(this.enElSuelo){
-            velocidadY = -10; //fuerza del salto
+            velocidadY = -13; //fuerza del salto
             this.enElSuelo = false;
         }
     }

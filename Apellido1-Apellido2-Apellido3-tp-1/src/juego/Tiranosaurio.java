@@ -15,8 +15,8 @@ public class Tiranosaurio {
 	private double ALTO = 50;
 	private double angulo;
 	private double escala;
-	private Image imagenIzq = Herramientas.cargarImagen("tiranosaurioIzq.png");
-	private Image imagenDer = Herramientas.cargarImagen("tiranosaurio.png");
+	private Image imagenIzq = Herramientas.cargarImagen("dino.gif");
+	private Image imagenDer = Herramientas.cargarImagen("dino.gif");
 	private boolean tocoPantallaIzq = false;
 	private boolean tocoPantallaDer = false;
 	private boolean disparoLadoTiranosaurios;
@@ -29,10 +29,10 @@ public class Tiranosaurio {
 		this.y = y;
 		this.ANCHO = ANCHO;
 		this.ALTO = ALTO;
-		this.imagenIzq = Herramientas.cargarImagen("tiranosaurioIzq.png");
-		this.imagenDer = Herramientas.cargarImagen("tiranosaurio.png");
+		this.imagenIzq = Herramientas.cargarImagen("dino.gif");
+		this.imagenDer = Herramientas.cargarImagen("dino.gif");
 		this.angulo = 0;
-		this.escala= 0.15;
+		this.escala= 1;
 	}
 	//----------------Getters y Setters-----------------//
 	public int getX() {

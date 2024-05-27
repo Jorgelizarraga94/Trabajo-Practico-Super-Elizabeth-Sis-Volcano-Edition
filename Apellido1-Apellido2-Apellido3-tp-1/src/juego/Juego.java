@@ -26,12 +26,12 @@ public class Juego extends InterfaceJuego {
 
 	Juego() {
 		//--------Inicializa el objeto entorno--------//
-		this.entorno = new Entorno(this, " Super Elizabeth Sis, Volcano Edition - Grupo ... - v1", 1000, 700);
+		this.entorno = new Entorno(this, " Super Elizabeth Sis, Volcano Edition - Grupo ... - v1", 1000, 850);
 		//Inicializar lo que haga falta para el juego
 		//--------carga de imagen de fondo--------//
-		this.fondo = Herramientas.cargarImagen("lava.png");
+		this.fondo = Herramientas.cargarImagen("interiorVolcan.jpeg");
 		this.bloque = new Bloques(); 
-		this.princesa = new Princesa(entorno.ancho()/2 , 557 , 10, 50); 
+		this.princesa = new Princesa(entorno.ancho()/2 , 750 , 40, 50); 
 		this.proyectil = new Proyectil(princesa.getX() , princesa.getY() , 20, 20);
 		this.tiranosaurio = new Tiranosaurio(); 
 		Random numeroAleatorio = new Random();
@@ -44,21 +44,21 @@ public class Juego extends InterfaceJuego {
 		tiranosaurios = new Tiranosaurio[8]; 
 		//--------Inicialización de la lista de Bloques y creación de pisos--------//
 		todosLosPisos = new ArrayList<Bloques>();
-		bloque.crearPiso(todosLosPisos,piso1 , 600,50,50); 
-		bloque.crearPiso(todosLosPisos,piso2, 450,50,50);
-		bloque.crearPiso(todosLosPisos,piso3 , 300,50,50);
-		bloque.crearPiso(todosLosPisos,piso4 , 150,50,50);
+		bloque.crearPiso(todosLosPisos,piso1 , 800,50,50); 
+		bloque.crearPiso(todosLosPisos,piso2, 600,50,50);
+		bloque.crearPiso(todosLosPisos,piso3 , 400,50,50);
+		bloque.crearPiso(todosLosPisos,piso4 , 200,50,50);
 		//--------Inicialización de la lista de Tiranosaurio y creación de Tiranosaurios--------//
 		listaTiranosaurio = new ArrayList<Tiranosaurio>();
 		bombaDino = new ArrayList <Bomba>();
-		tiranosaurios[0] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900), 540 , 20 , 20);
-		tiranosaurios[1] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 540 , 20 , 20);
-		tiranosaurios[2] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 400 , 20 , 20);
-		tiranosaurios[3] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 400 , 20 , 20);
-		tiranosaurios[4] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 240 , 20 , 20);
-		tiranosaurios[5] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 240 , 20 , 20);
-		tiranosaurios[6] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 95 , 20 , 20);
-		tiranosaurios[7] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 95 , 20 , 20);
+		tiranosaurios[0] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900), 750 , 20 , 20);
+		tiranosaurios[1] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 750 , 20 , 20);
+		tiranosaurios[2] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 550 , 20 , 20);
+		tiranosaurios[3] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 550 , 20 , 20);
+		tiranosaurios[4] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 350 , 20 , 20);
+		tiranosaurios[5] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 350 , 20 , 20);
+		tiranosaurios[6] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 150 , 20 , 20);
+		tiranosaurios[7] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 150 , 20 , 20);
 		tiranosaurio.crearTiranosaurio(listaTiranosaurio, tiranosaurios);
 		//-----------------Proyectil tiranosaurio-----------------//
 		for (int i = 0; i < listaTiranosaurio.size(); i++) {
@@ -92,7 +92,7 @@ public class Juego extends InterfaceJuego {
 				}
 				else {
 					princesa.setEnElSuelo(false);
-					princesa.setPiso(540);
+					princesa.setPiso(750);
 					if(colisionPiesBloque(todosLosPisos.get(i))){
 						princesa.setPiso(princesa.getY());
 					}
@@ -109,7 +109,7 @@ public class Juego extends InterfaceJuego {
 				}
 				else {
 					princesa.setEnElSuelo(false);
-					princesa.setPiso(540);
+					princesa.setPiso(750);
 					if(colisionPiesBloque(todosLosPisos.get(i))){
 						princesa.setPiso(princesa.getY());
 					}	
