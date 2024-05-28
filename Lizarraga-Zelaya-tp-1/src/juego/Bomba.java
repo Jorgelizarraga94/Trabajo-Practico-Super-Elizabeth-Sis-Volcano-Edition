@@ -58,14 +58,14 @@ public class Bomba {
 		//entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.blue);
 		double bala =  this.x += velocidadDisparo;
 		this.x = bala;
-		entorno.dibujarImagen(imagen, this.x, this.y +20, 0, 0.09);
+		entorno.dibujarImagen(imagen, this.x, this.y, 0, 0.09);
 	}
 	
 	public void disparoIzq(Entorno entorno , int velocidadDisparo) {
 		//entorno.dibujarRectangulo(this.x, this.y, this.ANCHO, this.ALTO, 0, Color.red);
 		double bala =  this.x -= velocidadDisparo;
 		this.x = bala;
-		entorno.dibujarImagen(imagen, this.x, this.y + 20, 0, 0.09);
+		entorno.dibujarImagen(imagen, this.x, this.y, 0, 0.09);
 	}
 	
 }

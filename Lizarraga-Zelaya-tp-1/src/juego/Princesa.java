@@ -126,13 +126,13 @@ public class Princesa {
 
 	//----------Getters y Setters----------//
 	public void dibujarDer(Entorno entorno) {
-		//entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.blue);
-		entorno.dibujarImagen(imagenDer, x, y, angulo, escala);
+		entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.blue);
+		//entorno.dibujarImagen(imagenDer, x, y, angulo, escala);
 	}
 	
 	public void dibujarIzq(Entorno entorno) {
-		//entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.blue);
-		entorno.dibujarImagen(imagenIzq, x, y, angulo, escala);
+		entorno.dibujarRectangulo(this.x, this.y, this.ancho, this.alto, 0, Color.blue);
+		//entorno.dibujarImagen(imagenIzq, x, y, angulo, escala);
 	}
 	
 	public void movIzq() {

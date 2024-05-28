@@ -1,7 +1,9 @@
 package juego;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 import entorno.Entorno;
 import entorno.Herramientas;
@@ -18,23 +20,30 @@ public class Juego extends InterfaceJuego {
 	private ArrayList <Tiranosaurio> listaTiranosaurio;
 	private ArrayList <Bomba> bombaDino;
 	private Princesa princesa; 
+	private int enemigosEliminados;
+	private int puntaje;
 	private Tiranosaurio [] tiranosaurios;
 	private Tiranosaurio tiranosaurio;
 	private Proyectil proyectil;
-	
+	Random numeroAleatorio = new Random();
 	private Image fondo;
 
+	private int tiempo = 0;
 	Juego() {
+		tiempo += 1;
+		this.enemigosEliminados = 0;
+		this.puntaje = 0;
 		//--------Inicializa el objeto entorno--------//
 		this.entorno = new Entorno(this, " Super Elizabeth Sis, Volcano Edition - Grupo ... - v1", 1000, 850);
 		//Inicializar lo que haga falta para el juego
+		
 		//--------carga de imagen de fondo--------//
 		this.fondo = Herramientas.cargarImagen("interiorVolcan.jpeg");
 		this.bloque = new Bloques(); 
 		this.princesa = new Princesa(entorno.ancho()/2 , 750 , 10, 50); 
 		this.proyectil = new Proyectil(princesa.getX(), princesa.getY() + princesa.getAlto()/2 , 20, 20);
 		this.tiranosaurio = new Tiranosaurio(); 
-		Random numeroAleatorio = new Random();
+		
 		//--------Reserva de 20 espacios para bloques--------//
 		piso1 = new Bloques[20]; 
 		piso2 = new Bloques[20];
@@ -51,14 +60,14 @@ public class Juego extends InterfaceJuego {
 		//--------Inicialización de la lista de Tiranosaurio y creación de Tiranosaurios--------//
 		listaTiranosaurio = new ArrayList<Tiranosaurio>();
 		bombaDino = new ArrayList <Bomba>();
-		tiranosaurios[0] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900), 750 , 20 , 20);
-		tiranosaurios[1] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 750 , 20 , 20);
-		tiranosaurios[2] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 550 , 20 , 20);
-		tiranosaurios[3] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 550 , 20 , 20);
-		tiranosaurios[4] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 350 , 20 , 20);
-		tiranosaurios[5] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 350 , 20 , 20);
-		tiranosaurios[6] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 150 , 20 , 20);
-		tiranosaurios[7] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 150 , 20 , 20);
+		tiranosaurios[0] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900), 761 , 10 , 30);
+		tiranosaurios[1] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 761 , 10 , 30);
+		tiranosaurios[2] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 561 , 10 , 30);
+		tiranosaurios[3] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 561 , 10 , 30);
+		tiranosaurios[4] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 361 , 10 , 30);
+		tiranosaurios[5] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 361 , 10 , 30);
+		tiranosaurios[6] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 161 , 10 , 30);
+		tiranosaurios[7] = new Tiranosaurio(numeroAleatorio.nextInt(50, 900) , 161 , 10 , 30);
 		tiranosaurio.crearTiranosaurio(listaTiranosaurio, tiranosaurios);
 		//-----------------Proyectil tiranosaurio-----------------//
 		for (int i = 0; i < listaTiranosaurio.size(); i++) {
@@ -76,8 +85,16 @@ public class Juego extends InterfaceJuego {
 	public void tick(){
 		//--------FONDO--------//
 		entorno.dibujarImagen(fondo, entorno.ancho()/2,entorno.alto()/2,0);
+		
 	    //--------DIBUJA LOS BLOQUES DE CADA PISO--------//
 		dibujarBloques(todosLosPisos);
+		//Dibuja el puntaje
+				this.entorno.cambiarFont("",25, Color.white);
+				this.entorno.escribirTexto("Puntaje: "+ this.puntaje, 15,20);
+				//Dibuja el puntaje
+				this.entorno.cambiarFont("",25, Color.white);
+				this.entorno.escribirTexto("Enemigos Eliminados: "+ this.enemigosEliminados, 15,50);
+
 		//--------DIBUJA A LA PRINCESA Y LE DA MOVILIDAD--------//
 		this.princesa.dibujarDer(this.entorno);
 		//--------DIBUJA EL TIRANOSAURIO--------//
@@ -105,7 +122,7 @@ public class Juego extends InterfaceJuego {
 			princesa.setDisparoLadoPrincesa(false);
 			for(int i = 0; i < todosLosPisos.size(); i++) {
 				if(colisionPrincesaBloque(todosLosPisos.get(i))) {
-					princesa.setPiso(princesa.getY());
+					//princesa.setPiso(princesa.getY());
 				}
 				else {
 					princesa.setEnElSuelo(false);
@@ -126,7 +143,7 @@ public class Juego extends InterfaceJuego {
 		}
 		//--------DISPARO PRINCESA------------//
 		disparoPrincesa(this.proyectil, princesa.getDisparoLadoPrincesa());
-		//--------SI PRESIONA LA TECLA X SALTA, ROMPE LOS BLOQUES Y CAMBIA LA GRAVEDAD PARA SIMULAR COLISION--------//
+		//--------SI PRESIONA LA TECLA X SALTA, ROMPE LOS BLOQUES Y COLISIONA CONTRA LOS BLOQUES--------//
 		if(this.entorno.estaPresionada('x')) {
 			 princesa.saltar();
 			 for(int i = 0; i < todosLosPisos.size(); i++) {
@@ -137,13 +154,45 @@ public class Juego extends InterfaceJuego {
 			 }
 			 romperBloque(); 
 		}
+		//----------VERIFICACIÓN DE COLISION CONSTANTE ENTRE PROYECTIL Y BOMBA-----------------//
 		for (int i = 0; i < bombaDino.size(); i++) {
 			if(colisionProyectilBomba(proyectil , bombaDino.get(i))) {
-				Proyectil proyectilNuevo = new Proyectil(princesa.getX() , princesa.getY() , 20, 20);
-				proyectil = proyectilNuevo;
+				proyectil = new Proyectil(princesa.getX() , princesa.getY() , 20, 20);
 				Bomba nuevoProyectil = new Bomba(listaTiranosaurio.get(i).getX() ,listaTiranosaurio.get(i).getY(),20,20);
 				bombaDino.set(i, nuevoProyectil);
 			}
+		}
+		//---------VERIFICACIÓN DE COLISION CONSTANTE ENTRE LOS TIRANOSAURIOS Y LOS BLOQUES-----------//
+		for (int i = 0; i < listaTiranosaurio.size(); i++) {
+			listaTiranosaurio.get(i).Caida();
+		    boolean colisionDetectada = false;
+		    for (int j = 0; j < todosLosPisos.size(); j++) {
+		        if (colisionPiesTiranosauriosBloque(todosLosPisos.get(j), listaTiranosaurio.get(i))) {
+		            colisionDetectada = true;
+		            break; // Salimos del bucle interno ya que detectamos una colisión
+		        }
+		    }
+		    if(colisionDetectada) {
+		        //System.out.println("Tiranosaurio " + i + " ha colisionado con un bloque.");
+		    } else {
+		    	listaTiranosaurio.get(i).setEnElSuelo(false);
+	        	listaTiranosaurio.get(i).setPiso(762);
+	        	  for (int j = 0; j < todosLosPisos.size(); j++) {
+					if(colisionTiranosaurioBloque(todosLosPisos.get(j), listaTiranosaurio.get(i))){
+						listaTiranosaurio.get(i).setPiso(listaTiranosaurio.get(i).getY()-50);
+					}
+			        //System.out.println("Tiranosaurio " + i + " no ha colisionado con ningún bloque.");
+	        	 }  
+		    }
+		}
+		for (int i = 0; i < listaTiranosaurio.size(); i++) {
+			if(colisionTiranosaurioProyectil(proyectil,listaTiranosaurio.get(i))) {
+				System.out.println("hay colision");
+				Tiranosaurio tiranosaurio = new Tiranosaurio(listaTiranosaurio.get(numeroAleatorio.nextInt(0, 7)).getX(), listaTiranosaurio.get(numeroAleatorio.nextInt(0, 7)).getY() , 10 , 30);
+				listaTiranosaurio.set(i, tiranosaurio);
+				enemigosEliminados ++;
+				puntaje += 2;
+			};
 		}
 		//---------------------COMPROBACIÓN DE COLISIONES ENTRE PRINCESA Y BLOQUES-------//
 		comprobaciónDeColisiones();
@@ -228,10 +277,48 @@ public class Juego extends InterfaceJuego {
 				}
 		}
 	}
+	public boolean colisionPiesTiranosauriosBloque(Bloques bloque, Tiranosaurio tiranosaurio) {
+	    boolean colisionY = colisionTiranosaurioBloque(bloque, tiranosaurio) &&
+	                        tiranosaurio.getY() + ((tiranosaurio.getALTO() / 2) + 3) > bloque.getY() - bloque.getAlto() / 2 &&
+	                        tiranosaurio.getY() + ((tiranosaurio.getALTO() / 2) + 3) < bloque.getY() + (bloque.getAlto() / 2);
+	    return colisionY;
+	}
+	private boolean colisionTiranosaurioProyectil(Proyectil proyectil, Tiranosaurio tiranosaurio) {
+		if(tiranosaurio != null && proyectil != null) {
+			boolean colisionX = (tiranosaurio.getX() - tiranosaurio.getANCHO() / 2 < proyectil.getX() + proyectil.getANCHO() / 2 &&
+			                     tiranosaurio.getX() - tiranosaurio.getANCHO() / 2 > proyectil.getX() - proyectil.getANCHO() / 2) ||
+			                    (tiranosaurio.getX() + tiranosaurio.getANCHO() / 2 > proyectil.getX() - proyectil.getANCHO() / 2 &&
+			                     tiranosaurio.getX() + tiranosaurio.getANCHO() / 2 < proyectil.getX() + proyectil.getANCHO() / 2);
+			boolean colisionY = (tiranosaurio.getY() - tiranosaurio.getALTO() / 2 > proyectil.getY() - proyectil.getANCHO() / 2 &&
+			                    tiranosaurio.getY() - tiranosaurio.getALTO() / 2 < proyectil.getY() + proyectil.getANCHO() / 2) ||
+			                   	(tiranosaurio.getY() + tiranosaurio.getALTO() / 2 > proyectil.getY() - proyectil.getANCHO() / 2 &&
+			                    tiranosaurio.getY() + tiranosaurio.getALTO() / 2 <= proyectil.getY() + proyectil.getANCHO() / 2);
+			return colisionX && colisionY;
+		}
+		else {
+			return false;
+		}
+	}
+	private boolean colisionTiranosaurioBloque(Bloques bloque, Tiranosaurio tiranosaurio) {
+		if(tiranosaurio != null && bloque != null) {
+			boolean colisionX = (tiranosaurio.getX() - tiranosaurio.getANCHO() / 2 < bloque.getX() + bloque.getAncho() / 2 &&
+			                     tiranosaurio.getX() - tiranosaurio.getANCHO() / 2 > bloque.getX() - bloque.getAncho() / 2) ||
+			                    (tiranosaurio.getX() + tiranosaurio.getANCHO() / 2 > bloque.getX() - bloque.getAncho() / 2 &&
+			                     tiranosaurio.getX() + tiranosaurio.getANCHO() / 2 < bloque.getX() + bloque.getAncho() / 2);
+			boolean colisionY = (tiranosaurio.getY() - tiranosaurio.getALTO() / 2 > bloque.getY() - bloque.getAlto() / 2 &&
+			                    tiranosaurio.getY() - tiranosaurio.getALTO() / 2 < bloque.getY() + bloque.getAlto() / 2) ||
+			                   	(tiranosaurio.getY() + tiranosaurio.getALTO() / 2 > bloque.getY() - bloque.getAlto() / 2 &&
+			                    tiranosaurio.getY() + tiranosaurio.getALTO() / 2 <= bloque.getY() + bloque.getAlto() / 2);
+			return colisionX && colisionY;
+		}
+		else {
+			return false;
+		}
+	}
 	//-----------------------Colisión entre el pie de la princesa y la parte superior del bloque------------------------//
 	public boolean colisionPiesBloque(Bloques bloque) {
-		boolean colisionY = colisionPrincesaBloque(bloque) && princesa.getY() + ((princesa.getAlto()/2)+3) > bloque.getY() - bloque.getAlto()/2
-														   && princesa.getY() + ((princesa.getAlto()/2)+3) < (bloque.getY() + (bloque.getAlto()/2)+10);
+		boolean colisionY = colisionPrincesaBloque(bloque) && princesa.getY() + ((princesa.getAlto()/2)) > bloque.getY() - bloque.getAlto()/2
+														   && princesa.getY() + ((princesa.getAlto()/2)) < (bloque.getY() - (bloque.getAlto()/2)+10);
 		return colisionY;
 	}
 	//-----------------------Colisión entre la cabeza y la parte inferior del bloque------------------------//

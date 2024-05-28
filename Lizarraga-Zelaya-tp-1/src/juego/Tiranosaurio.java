@@ -9,10 +9,10 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Tiranosaurio {
-	private int x = 500;
-	private int y = 565;
-	private double ANCHO = 30;
-	private double ALTO = 50;
+	private int x;
+	private int y;
+	private int ANCHO;
+	private int ALTO;
 	private double angulo;
 	private double escala;
 	private Image imagenIzq = Herramientas.cargarImagen("dino.gif");
@@ -21,6 +21,13 @@ public class Tiranosaurio {
 	private boolean tocoPantallaDer = false;
 	private boolean disparoLadoTiranosaurios;
 	private boolean disparoLadoTiranosaurios2;
+	private int piso;
+	//----------Variables de salto----------//
+	private boolean enElSuelo = true;  // Variable para verificar si el personaje está en el suelo
+	private double velocidadY = 0;     // Velocidad vertical del personaje
+	private double gravedad = 0.3; 		// Gravedad del personaje
+		
+
 	
 	//----------------Constructores-----------------//
 	public Tiranosaurio() {}
@@ -33,6 +40,7 @@ public class Tiranosaurio {
 		this.imagenDer = Herramientas.cargarImagen("dino.gif");
 		this.angulo = 0;
 		this.escala= 1;
+		this.piso = this.y + this.ALTO/2;
 	}
 	//----------------Getters y Setters-----------------//
 	public int getX() {
@@ -90,14 +98,27 @@ public class Tiranosaurio {
 	public void setDisparoLadoTiranosaurios(boolean disparoLadoTiranosaurios) {
 		this.disparoLadoTiranosaurios = disparoLadoTiranosaurios;
 	}
+	
+	public int getPiso() {
+		return piso;
+	}
+	public void setPiso(int piso) {
+		this.piso = piso;
+	}
+	public boolean getEnElSuelo() {
+		return enElSuelo;
+	}
+	public void setEnElSuelo(boolean enElSuelo) {
+		this.enElSuelo = enElSuelo;
+	}
 	//----------------Metodos-----------------//
 	public void movIzq() {
 		if(tocoPantallaIzq == false) {
-			this.x -= 1.5;
+			this.x -= 1;
 			disparoLadoTiranosaurios = true;
 		}
 		else if(tocoPantallaIzq == true){
-			this.x = this.x+=1.5;
+			this.x = this.x+=1;
 			disparoLadoTiranosaurios = false;
 		}
 	}
@@ -114,10 +135,12 @@ public class Tiranosaurio {
 	
 	public void movDer() {
 		if(tocoPantallaDer == false) {
-			this.x += 1.5;
+			this.x += 1;
+			disparoLadoTiranosaurios = false;
 		}
 		else if(tocoPantallaDer == true){
-			this.x = this.x-=1.5;
+			this.x = this.x-=1;
+			disparoLadoTiranosaurios = true;
 		}
 	}
 	
@@ -141,12 +164,25 @@ public class Tiranosaurio {
 		for (int i = 0; i < tiranosaurios.size(); i++) {
 			Tiranosaurio tira = tiranosaurios.get(i);
 			if(i % 2 == 0) {
-				entorno.dibujarImagen(imagenIzq, tira.getX(), tira.getY(), tira.getAngulo(), tira.getEscala());
+				entorno.dibujarImagen(imagenIzq, tira.getX(), tira.getY()-15, tira.getAngulo(), tira.getEscala());
 			}
 			else {
-				entorno.dibujarImagen(imagenDer, tira.getX(), tira.getY(), tira.getAngulo(), tira.getEscala());
+				entorno.dibujarImagen(imagenDer, tira.getX(), tira.getY()-15, tira.getAngulo(), tira.getEscala());
 			}
 		}
 	}
+
+    public void Caida() {
+        // Aplicar gravedad en cada frame
+        if(!enElSuelo) {
+            velocidadY += gravedad;
+            this.y += velocidadY;
+        }
+        if(this.y >= this.piso) {
+        	this.setY(this.piso);
+            this.velocidadY = 0;
+            this.enElSuelo = true;
+        }
+    }
 
 }
