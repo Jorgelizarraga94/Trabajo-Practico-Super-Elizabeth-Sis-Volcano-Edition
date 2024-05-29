@@ -151,7 +151,7 @@ public class Princesa {
         }
     }
 	
-    public void actualizarSalto() {
+    public void caidaSalto() {
         // Aplicar gravedad en cada frame
         if (!enElSuelo) {
             velocidadY += gravedad;
