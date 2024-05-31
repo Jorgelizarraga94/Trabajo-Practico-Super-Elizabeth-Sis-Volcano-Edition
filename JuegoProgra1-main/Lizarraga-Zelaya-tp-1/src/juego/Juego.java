@@ -143,7 +143,7 @@ public class Juego extends InterfaceJuego {
 		sonidoJuego.loop(3);
 		//Dibuja el fondo del juego
 		entorno.dibujarImagen(fondo, entorno.ancho()/2,entorno.alto()/2,0);
-	    //Dibuja los bloques de cada piso
+		//Dibuja los bloques de cada piso
 		dibujarBloques(todosLosPisos);
 		//Cambio de fuente
 		entorno.cambiarFont("",25, Color.white);
