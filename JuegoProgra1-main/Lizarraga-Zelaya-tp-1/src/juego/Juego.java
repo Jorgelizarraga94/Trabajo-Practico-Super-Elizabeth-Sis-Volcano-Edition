@@ -37,7 +37,6 @@ public class Juego extends InterfaceJuego {
 	private Image win;
 	private Clip sonidoInicio;
 	private Clip sonidoJuego;
-	private Clip saltar;
 	private int enemigosEliminados;
 	private int puntaje;
 	private int vidas;
@@ -56,8 +55,6 @@ public class Juego extends InterfaceJuego {
 		sonidoInicio = Herramientas.cargarSonido("inicio.wav");
 		//Inicialización  del sonido del juego
 		sonidoJuego =  Herramientas.cargarSonido("stratosphere.wav");
-		//Inicilización del sonido de salto
-		saltar =  Herramientas.cargarSonido("jump1.wav");
 		//Inicializar lo que haga falta para el juego
 		inicio = Herramientas.cargarImagen("inicio.jpg");
 		//carga de imagen de fondo
@@ -248,11 +245,17 @@ public class Juego extends InterfaceJuego {
 	private void verificacionProyectilTiranosaurios() {
 		for (int i = 0; i < listaTiranosaurio.size(); i++) {
 			if(colisionTiranosaurioProyectil(proyectil,listaTiranosaurio.get(i))) {
-				int contador= numeroAleatorio.nextInt(0,3);
-				Tiranosaurio tiranosaurio = new Tiranosaurio(numeroAleatorio.nextInt(50, 900), pisos.get(contador) , 10 , 30);
-				listaTiranosaurio.set(i, tiranosaurio);
-				enemigosEliminados ++;
-				puntaje += 2;
+				if(listaTiranosaurio.size() > 2) {
+					listaTiranosaurio.remove(i);
+					bombaDino.remove(i);
+					enemigosEliminados ++;
+					puntaje += 2;
+				}
+				else {
+					int contador= numeroAleatorio.nextInt(0,3);
+					Tiranosaurio tiranosaurio = new Tiranosaurio(numeroAleatorio.nextInt(50, 900), pisos.get(contador) , 10 , 30);
+					listaTiranosaurio.set(i, tiranosaurio);
+				}
 			}
 		}
 	}
