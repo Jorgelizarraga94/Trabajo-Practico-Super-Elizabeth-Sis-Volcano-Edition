@@ -62,7 +62,7 @@ public class Juego extends InterfaceJuego {
 		//Carga de imagen de Game Over
 		gameOver = Herramientas.cargarImagen("gameOver.jpg");
 		//Carga de fondo negro para Winner
-		win = Herramientas.cargarImagen("pantallaNegra.jpg");
+		win = Herramientas.cargarImagen("winner.jpg");
 		bloque = new Bloques(); 
 		princesa = new Princesa(entorno.ancho()/2 , 750 , 30, 50); 
 		proyectil = new Proyectil(princesa.getX(), princesa.getY() , 20, 10);
