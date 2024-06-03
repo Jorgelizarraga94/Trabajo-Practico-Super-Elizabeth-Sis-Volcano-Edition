@@ -19,8 +19,7 @@ public class Tiranosaurio {
 	private boolean tocoPantallaDer = false;
 	private boolean disparoLadoTiranosaurios;
 	private int piso;
-	private Image imagenIzq = Herramientas.cargarImagen("dino.gif");
-	private Image imagenDer = Herramientas.cargarImagen("dino.gif");
+	private Image imagen = Herramientas.cargarImagen("dino.gif");
 	//----------Variables de salto----------//
 	private boolean enElSuelo = true;  // Variable para verificar si el personaje está en el suelo
 	private double velocidadY = 0;     // Velocidad vertical del personaje
@@ -35,8 +34,7 @@ public class Tiranosaurio {
 		this.y = y;
 		this.ANCHO = ANCHO;
 		this.ALTO = ALTO;
-		this.imagenIzq = Herramientas.cargarImagen("dino.gif");
-		this.imagenDer = Herramientas.cargarImagen("dino.gif");
+		this.imagen = Herramientas.cargarImagen("dino.gif");
 		this.angulo = 0;
 		this.escala= 1;
 		this.piso = this.y + this.ALTO/2;
@@ -162,12 +160,7 @@ public class Tiranosaurio {
 	public void dibujar(Entorno entorno , ArrayList<Tiranosaurio> tiranosaurios) {
 		for (int i = 0; i < tiranosaurios.size(); i++) {
 			Tiranosaurio tira = tiranosaurios.get(i);
-			if(i % 2 == 0) {
-				entorno.dibujarImagen(imagenIzq, tira.getX(), tira.getY()-15, tira.getAngulo(), tira.getEscala());
-			}
-			else {
-				entorno.dibujarImagen(imagenDer, tira.getX(), tira.getY()-15, tira.getAngulo(), tira.getEscala());
-			}
+				entorno.dibujarImagen(imagen, tira.getX(), tira.getY()-15, tira.getAngulo(), tira.getEscala());
 		}
 	}
 
