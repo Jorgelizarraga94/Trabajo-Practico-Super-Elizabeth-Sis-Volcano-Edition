@@ -24,7 +24,6 @@ public class Princesa {
 	
 	//----------constructor----------//
 	public Princesa(int x, int y, int ancho, int alto) {
-		super();
 		this.x = x;
 		this.y = y;
 		this.ancho = ancho;

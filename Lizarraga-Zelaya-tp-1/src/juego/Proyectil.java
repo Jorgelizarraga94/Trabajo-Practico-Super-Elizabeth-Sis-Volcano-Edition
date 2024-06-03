@@ -14,7 +14,6 @@ public class Proyectil {
 	private Image imagen;
 	//----------------Constructores-----------------//
 	public Proyectil(double x, double y, int ANCHO, int ALTO) {
-		super();
 		this.x = x;
 		this.y = y;
 		this.ANCHO = ANCHO;

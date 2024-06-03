@@ -22,7 +22,6 @@ public class Bloques {
 	//----------Constructores----------//
 	public Bloques() {}
 	public Bloques(int x, int y, int ancho, int alto , boolean seRompe ){
-		super();
 		this.x = x;
 		this.y = y;
 		this.ancho = ancho;

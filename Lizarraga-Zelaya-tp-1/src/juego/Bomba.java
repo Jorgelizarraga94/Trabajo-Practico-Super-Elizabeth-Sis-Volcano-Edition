@@ -13,8 +13,7 @@ public class Bomba {
 	private Image imagen;
 	
 	//----------------Constructores-----------------//
-	public Bomba(int x, int y, int aNCHO, int aLTO) {
-		super();
+	public Bomba(int x, int y, int ANCHO, int ALTO) {
 		this.x = x;
 		this.y = y;
 		this.ANCHO = ANCHO;

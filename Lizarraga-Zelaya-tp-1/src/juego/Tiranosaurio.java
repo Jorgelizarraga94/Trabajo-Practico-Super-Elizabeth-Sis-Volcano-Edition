@@ -15,13 +15,12 @@ public class Tiranosaurio {
 	private int ALTO;
 	private double angulo;
 	private double escala;
-	private Image imagenIzq = Herramientas.cargarImagen("dino.gif");
-	private Image imagenDer = Herramientas.cargarImagen("dino.gif");
 	private boolean tocoPantallaIzq = false;
 	private boolean tocoPantallaDer = false;
 	private boolean disparoLadoTiranosaurios;
-	private boolean disparoLadoTiranosaurios2;
 	private int piso;
+	private Image imagenIzq = Herramientas.cargarImagen("dino.gif");
+	private Image imagenDer = Herramientas.cargarImagen("dino.gif");
 	//----------Variables de salto----------//
 	private boolean enElSuelo = true;  // Variable para verificar si el personaje está en el suelo
 	private double velocidadY = 0;     // Velocidad vertical del personaje
@@ -184,5 +183,4 @@ public class Tiranosaurio {
             this.enElSuelo = true;
         }
     }
-
 }
