@@ -9,23 +9,29 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Tiranosaurio {
-	private int x;
-	private int y;
-	private int ANCHO;
-	private int ALTO;
-	private double angulo;
-	private double escala;
-	private boolean tocoPantallaIzq = false;
-	private boolean tocoPantallaDer = false;
-	private boolean disparoLadoTiranosaurios;
-	private int piso;
-	private Image imagen = Herramientas.cargarImagen("dino.gif");
-	//----------Variables de salto----------//
-	private boolean enElSuelo = true;  // Variable para verificar si el personaje está en el suelo
-	private double velocidadY = 0;     // Velocidad vertical del personaje
-	private double gravedad = 0.3; 		// Gravedad del personaje
-		
-
+	//posición del tiranosaurio en pantalla 
+	private int x; 
+	private int y; 
+	//dimensiones del tiranosaurio 
+	private int ANCHO; 
+	private int ALTO; 
+	//booleanos indican si el Tiranosaurio toca algun borde lateral del entorno  
+	private boolean tocoPantallaIzq = false; 
+	private boolean tocoPantallaDer = false; 
+	//booleado indica el lado de disparo del tiranosaurio 
+	private boolean disparoLadoTiranosaurios; 
+	//piso del tiranosaurio 
+	private int piso; 
+	//Representan la imagen en formato gif de los Tiranosaurios	  
+	private Image imagen = Herramientas.cargarImagen("dino.gif"); 
+	private double angulo; 
+	private double escala; 
+	//----------Variables de salto----------// 
+	/*Estas variables las utilizamos para que el Tiranosaurio 
+	reconozca el piso y en caso contrario caiga a un piso inferior */ 
+	private boolean enElSuelo = true;  
+	private double velocidadY = 0;  
+	private double gravedad = 0.3; 		 
 	
 	//----------------Constructores-----------------//
 	public Tiranosaurio() {}

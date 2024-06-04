@@ -6,12 +6,14 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Bomba {
-	private double x;
-	private double y;
-	private int ANCHO = 10;
-	private int ALTO = 10;
-	private Image imagen;
-	
+	//posicion de la bomba en pantalla 
+	private double x; 
+	private double y; 
+	//dimensiones constantes de la bomba 
+	private int ANCHO = 10; 
+	private int ALTO = 10; 
+	//Imagen de la bomba 
+	private Image imagen; 
 	//----------------Constructores-----------------//
 	public Bomba(int x, int y, int ANCHO, int ALTO) {
 		this.x = x;

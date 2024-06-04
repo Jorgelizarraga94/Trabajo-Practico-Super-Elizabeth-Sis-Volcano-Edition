@@ -4,13 +4,8 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
-
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.swing.JOptionPane;
-
 import entorno.Entorno;
 import entorno.Herramientas;
 import entorno.InterfaceJuego;
@@ -35,6 +30,7 @@ public class Juego extends InterfaceJuego {
 	private Image fondo;
 	private Image gameOver;
 	private Image win;
+	private Image gatito;
 	private Clip sonidoInicio;
 	private Clip sonidoJuego;
 	private int enemigosEliminados;
@@ -63,6 +59,8 @@ public class Juego extends InterfaceJuego {
 		gameOver = Herramientas.cargarImagen("gameOver.jpg");
 		//Carga de fondo negro para Winner
 		win = Herramientas.cargarImagen("winner.jpg");
+		//Carha de imagen de gatito
+		gatito = Herramientas.cargarImagen("gatito.gif");
 		bloque = new Bloques(); 
 		princesa = new Princesa(entorno.ancho()/2 , 750 , 30, 50); 
 		proyectil = new Proyectil(princesa.getX(), princesa.getY() , 20, 10);
@@ -143,6 +141,7 @@ public class Juego extends InterfaceJuego {
 		sonidoJuego.loop(3);
 		//Dibuja el fondo del juego
 		entorno.dibujarImagen(fondo, entorno.ancho()/2,entorno.alto()/2,0);
+		entorno.dibujarImagen(gatito, entorno.ancho() - 40, 161, 0, 0.5);
 		//Dibuja los bloques de cada piso
 		dibujarBloques(todosLosPisos);
 		//Cambio de fuente
@@ -512,17 +511,6 @@ public class Juego extends InterfaceJuego {
 			                   	(tiranosaurio.getY() + tiranosaurio.getALTO() / 2 > bloque.getY() - bloque.getAlto() / 2 &&
 			                    tiranosaurio.getY() + tiranosaurio.getALTO() / 2 <= bloque.getY() + bloque.getAlto() / 2);
 			return colisionX && colisionY;
-		}
-		else {
-			return false;
-		}
-	}
-	//Colision tiranosaurios
-	private boolean colisionTiranosaurios(Tiranosaurio tiranosaurio) {
-		if(tiranosaurios != null) {
-			boolean colisionX = tiranosaurio.getX() - tiranosaurio.getANCHO()/2 > tiranosaurio.getX() + tiranosaurio.getANCHO()/2 && tiranosaurio.getX() - tiranosaurio.getANCHO()/2 < tiranosaurio.getX() - tiranosaurio.getANCHO()/2 ||
-								tiranosaurio.getX() + tiranosaurio.getANCHO()/2 > tiranosaurio.getX() - tiranosaurio.getANCHO()/2 && tiranosaurio.getX() + tiranosaurio.getANCHO()/2 < tiranosaurio.getX() + tiranosaurio.getANCHO()/2;
-			return colisionX;
 		}
 		else {
 			return false;

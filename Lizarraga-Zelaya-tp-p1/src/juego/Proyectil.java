@@ -6,12 +6,16 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Proyectil {
-	private double x;
-	private double y;
-	private int ANCHO = 10;
-	private int ALTO = 10;
-	private boolean disparoActivo = false;
-	private Image imagen;
+	//posición del proyectil 
+	private double x; 
+	private double y; 
+	//dimensiones constantes del proyectil 
+	private int ANCHO = 10; 
+	private int ALTO = 10; 
+	//Booleano Indica (inicialmente en false) si el disparo del proyectil esta recorriendo 	el entorno 
+	private boolean disparoActivo = false; 
+	//imagen del proyectil 
+	private Image imagen; 
 	//----------------Constructores-----------------//
 	public Proyectil(double x, double y, int ANCHO, int ALTO) {
 		this.x = x;

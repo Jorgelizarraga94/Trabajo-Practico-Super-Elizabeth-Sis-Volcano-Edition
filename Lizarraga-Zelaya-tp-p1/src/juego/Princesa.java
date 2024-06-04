@@ -6,28 +6,36 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Princesa {
-	private double x;
-	private double y;
-	private int ancho;
-	private int alto;
-	private double piso = 750;
-	private Image imagenDer;
-	private Image imagenIzq;
-	private double angulo;
-	private double escala;
-	private boolean disparoLadoPrincesa;
-	//----------Variables de salto----------//
-	private boolean enElSuelo = true;  // Variable para verificar si el personaje está en el suelo
-	private double velocidadY = 0;     // Velocidad vertical del personaje
-	private double gravedad = 0.1; 		// Gravedad del personaje
-	
-	
+	//posicion de la princesa en pantalla  
+	private double x; 
+	private double y; 
+	//dimensiones constantes de la princesa 
+	private int ANCHO; 
+	private int ALTO; 
+	//posicion(del piso inferior) inicial donde nace la princesa  
+	private double piso = 750; 
+	/*Se le asigna una imagen cuando se desplaza hacia la izquierda  
+	y otra cuando lo hace hacia la derecha */ 
+	private Image imagenDer; 
+	private Image imagenIzq; 
+	private double angulo; 
+	private double escala; 
+	//booleano para diferenciar los lados de disparo de la princesa 
+	private boolean disparoLadoPrincesa; 
+	//----------Variables de salto----------// 
+	// Variable para verificar si el personaje está en el suelo 
+	private boolean enElSuelo = true; 
+	// Velocidad vertical del personaje,se inicializa en 0 hasta que detecte la tecla "X" 
+	private double velocidadY = 0;  
+	//Representa la velocidad de caida cuando no detecte un bloque  
+	private double gravedad = 0.1; 	
+
 	//----------constructor----------//
 	public Princesa(int x, int y, int ancho, int alto) {
 		this.x = x;
 		this.y = y;
-		this.ancho = ancho;
-		this.alto = alto;
+		this.ANCHO = ancho;
+		this.ALTO = alto;
 		this.imagenDer = Herramientas.cargarImagen("princesaDer.png");
 		this.imagenIzq = Herramientas.cargarImagen("princesaIzq.png");
 		this.angulo = 0;
@@ -60,19 +68,19 @@ public class Princesa {
 	}
 
 	public int getAncho() {
-		return ancho;
+		return ANCHO;
 	}
 
 	public void setAncho(int ancho) {
-		this.ancho = ancho;
+		this.ANCHO = ancho;
 	}
 
 	public int getAlto() {
-		return alto;
+		return ALTO;
 	}
 
 	public void setAlto(int alto) {
-		this.alto = alto;
+		this.ALTO = alto;
 	}
 
 	public double getAngulo() {

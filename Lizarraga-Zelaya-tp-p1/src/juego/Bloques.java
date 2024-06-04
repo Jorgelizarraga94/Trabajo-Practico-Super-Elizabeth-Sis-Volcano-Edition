@@ -9,16 +9,19 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Bloques {
-	private double x;
-	private double y;
-	private int ancho;
-	private int alto;
-	private boolean seRompe;
-	private double angulo;
-	private double escala;
-	private Image bloqueSeRompe = Herramientas.cargarImagen("bloqueSeRompe.png");
-	private Image bloqueNoSeRompe = Herramientas.cargarImagen("bloqueNoSeRompe.png");
-	
+	//coordenadas de posicion de bloques  
+	private double x; 
+	private double y; 
+	//dimensión de bloques 
+	private int ancho; 
+	private int alto; 
+	//booleano para diferenciar a los bloques rompibles de los no rompibles  
+	private boolean seRompe; 
+	private double angulo; 
+	private double escala; 
+	//imagenes de los bloques 
+	private Image bloqueSeRompe = Herramientas.cargarImagen("bloqueSeRompe.png"); 
+	private Image bloqueNoSeRompe = Herramientas.cargarImagen("bloqueNoSeRompe.png"); 
 	//----------Constructores----------//
 	public Bloques() {}
 	public Bloques(int x, int y, int ancho, int alto , boolean seRompe ){
